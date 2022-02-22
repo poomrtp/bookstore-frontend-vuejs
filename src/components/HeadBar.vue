@@ -22,33 +22,6 @@
             </button>
           </div>
           <div class="lg:flex flex-grow items-center" id="example-navbar-warning">
-            <!-- <ul class="flex flex-col lg:flex-row list-none mr-auto">
-            <li class="nav-item">
-              <a
-                class="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
-                href="#pablo"
-              >
-                <i class="fab fa-facebook-square text-lg leading-lg text-white opacity-75" />
-              </a>
-            </li>
-            <li class="nav-item">
-              <a
-                class="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-black hover:opacity-75"
-                href="#pablo"
-              >
-                <i class="fa-thin fa-angle text-lg leading-lg text-black opacity-75" />
-                <span class="ml-2">Tweet</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a
-                class="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
-                href="#pablo"
-              >
-                <span class="ml-2">Settings</span>
-              </a>
-            </li>
-          </ul> -->
             <div
               class="relative flex w-full sm:w-7/12 md:w-5/12 px-4 flex-wrap items-stretch lg:ml-auto"
             >
@@ -76,39 +49,46 @@
                 placeholder="Search"
               />
             </div>
-            <ul class="flex flex-col lg:flex-row list-none">
-              <li class="nav-item">
-                <a
-                  class="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-black hover:opacity-75"
-                  href="#pablo"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="h-6 w-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
+            <div class="flex flex-col lg:flex-row list-none">
+              <div class="nav-item">
+                <div class="dropdown relative">
+                  <a
+                    class="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-black hover:opacity-75"
+                    href="#pablo"
                   >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                    />
-                  </svg>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="h-5 w-5"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path
-                      d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"
-                    />
-                  </svg>
-                </a>
-              </li>
-              <li class="nav-item">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-6 w-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                      />
+                    </svg>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path
+                        d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"
+                      />
+                    </svg>
+                  </a>
+                  <div class="dropdown-menu absolute hidden text-black pt-2 -ml-24 w-52 border">
+                    <a v-for="(item, index) in accountItems" :key="(index)" class="bg-white hover:bg-gray-50 py-2 px-4 block whitespace-no-wrap" href="#">
+                      {{ item.title }}
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div class="nav-item">
                 <a
                   class="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-black hover:opacity-75"
                   href="#pablo"
@@ -124,8 +104,8 @@
                     />
                   </svg>
                 </a>
-              </li>
-            </ul>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -157,7 +137,7 @@
                   class="px-4 py-2 flex items-center text-md uppercase leading-snug text-black hover:opacity-75"
                   href="#pablo"
                 >
-                  <span>reward</span>
+                  <span>rewards</span>
                 </a>
               </li>
               <li class="nav-item">
@@ -193,6 +173,37 @@ import { Options, Vue } from 'vue-class-component'
   }
 })
 export default class HeadBar extends Vue {
-  msg!: string
+  private showAccountDropdown = false
+  private accountItems = [
+    {
+      title: "Your Account",
+      path: ""
+    },
+    {
+      title: "Your Order",
+      path: ""
+    },
+    {
+      title: "Your E-Book",
+      path: ""
+    },
+    {
+      title: "Redeems",
+      path: ""
+    },
+    {
+      title: "Logout",
+      path: ""
+    }
+  ]
+
+  activateAccountDropdown() : boolean {
+    return this.showAccountDropdown = !this.showAccountDropdown
+  }
 }
 </script>
+<style>
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+</style>

@@ -53,7 +53,7 @@ export default class ProductList extends Vue {
   private tabSelect = 0
 
   tabActive(index: number) : string {
-    return index === this.tabSelect ? 'bg-white border-t border-l border-r border-b-indigo-500 border-gray focus: border-b-2-indigo-500' : 'bg-gray-100 border-t border-l border-r border-gray '
+    return index === this.tabSelect ? 'bg-white border-t border-l border-r border-gray focus: bg-white' : 'bg-gray-100 border-t border-l border-r border-b border-gray '
   }
 
   tabOption(index : number) : number {
