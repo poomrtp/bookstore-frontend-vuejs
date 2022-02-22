@@ -1,5 +1,5 @@
 <template>
-  <div class="border-b border-gray w-full">
+  <div class="w-full">
     <div class="flex justify-center">
       <span>หนังสือ / Manga</span>
     </div>

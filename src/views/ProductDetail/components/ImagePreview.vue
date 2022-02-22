@@ -1,5 +1,5 @@
 <template>
-  <div class="border-b border-gray w-full">
+  <div class="w-full">
     THIS IS IMAGE
   </div>
 </template>
