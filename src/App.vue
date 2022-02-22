@@ -1,30 +1,20 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+  <head-bar></head-bar>
+  <div class="flex justify-center w-full mt-3">
+    <div class="w-full lg:max-w-7xl">
+      <router-view />
+    </div>
   </div>
-  <router-view/>
 </template>
+<script lang="ts">
+import { Options, Vue } from 'vue-class-component'
+import HeadBar from '@/components/HeadBar.vue'
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
-</style>
+@Options({
+  components: {
+    HeadBar
+  }
+})
+export default class Home extends Vue {}
+</script>
+<style></style>
