@@ -25,7 +25,7 @@
             เรื่อง: 
           </div>
           <div class="col-span-2">
-            [ TITLE ]
+            {{ product.name }}
           </div>
           <div class="">
             ภาพ: 
@@ -59,6 +59,7 @@
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
+import { mapState, mapActions } from 'vuex'
 import DetailHeader from './components/DetailHeader.vue'
 import ImagePreview from './components/ImagePreview.vue'
 import PriceDetail from './components/PriceDetail.vue'
@@ -68,10 +69,35 @@ import PriceDetail from './components/PriceDetail.vue'
     DetailHeader,
     ImagePreview,
     PriceDetail
+  },
+  props: {
+    name: {
+      type: String,
+      default: ''
+    },
+    callBackQuery: {
+      type: Object,
+      default: () => ({})
+    }
+  },
+  computed: {
+    ...mapState('Product', ['product']),
+  },
+  methods: {
+    ...mapActions({
+      fetchProductsByName: 'Product/fetchProductsByName'
+    })
   }
 })
 export default class Detail extends Vue {
+  readonly fetchProductsByName!: any
+  readonly product!: any
+  readonly name!: any
 
+  async created(): Promise<void> {
+    await this.fetchProductsByName(this.name)
+    console.log('this.product', this.product)
+  }
 }
 </script>
 

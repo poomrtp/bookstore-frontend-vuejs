@@ -1,6 +1,8 @@
 import { createStore } from 'vuex'
 
-export default createStore({
+import Product from './modules/productModule'
+
+const store = createStore({
   state: {
   },
   mutations: {
@@ -8,5 +10,8 @@ export default createStore({
   actions: {
   },
   modules: {
+    Product
   }
 })
+
+export default store

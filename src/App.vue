@@ -1,6 +1,6 @@
 <template>
   <head-bar></head-bar>
-  <div class="flex justify-center w-full mt-3">
+  <div class="flex justify-center w-full mt-3 my-6">
     <div class="w-full lg:max-w-7xl">
       <router-view />
     </div>

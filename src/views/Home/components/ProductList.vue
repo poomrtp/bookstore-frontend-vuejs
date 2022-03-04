@@ -24,8 +24,8 @@
     </div>
   </div>
   <div class="mt-6 grid grid-cols-1 gap-y-10 gap-x-2 sm:grid-cols-2 lg:grid-cols-5 xl:gap-x-4 mx-3">
-    <div v-for="i in 6" :key="i">
-      <product-card></product-card>
+    <div v-for="product in products" :key="product">
+      <product-card :product="product" @click="onClickDetail(product.name)"></product-card>
     </div>
   </div>
 </template>
@@ -34,10 +34,17 @@
 import { Options, Vue } from 'vue-class-component'
 import ProductCard from '../../../components/ProductCard.vue'
 
+
 @Options({
   components: {
     ProductCard
   },
+  props: {
+    products: {
+      type: Array,
+      default: () => []
+    }
+  }
 })
 export default class ProductList extends Vue {
   private tabItems: Array<any> = [
@@ -51,16 +58,58 @@ export default class ProductList extends Vue {
     }
   ]
   private tabSelect = 0
+  
 
   tabActive(index: number) : string {
-    return index === this.tabSelect ? 'bg-white border-t border-l border-r border-gray focus: bg-white' : 'bg-gray-100 border-t border-l border-r border-b border-gray '
+    return index === this.tabSelect ? 'bg-white border-t border-l border-r border-gray focus: bg-white focus: transition duration-150 ease-in-out' : 'bg-gray-100 border-t border-l border-r border-b border-gray '
   }
 
   tabOption(index : number) : number {
     return this.tabSelect = index
   }
 
+  onClickDetail (name: string): void {
+    console.log('name', name)
+    this.$emit('clickDetail', name)
+  }
+
 }
+// import { defineComponent } from 'vue'
+
+// export default defineComponent({
+//   components: {
+//     ProductCard
+//   },
+//   props: {
+//     products: {
+//       type: Array,
+//       default: () => []
+//     }
+//   },
+//   data() {
+//     return {
+//       tabItems: [
+//         {
+//           name: 'New items',
+//           path: ''
+//         },
+//         {
+//           name: 'Books',
+//           path: ''
+//         }
+//       ],
+//       tabSelect: 0
+//     }
+//   },
+//   methods: {
+//     tabActive(index: number) : string {
+//       return index === this.tabSelect ? 'bg-white border-t border-l border-r border-gray focus: bg-white focus: transition duration-150 ease-in-out' : 'bg-gray-100 border-t border-l border-r border-b border-gray '
+//     },
+//     tabOption(index : number) : number {
+//       return this.tabSelect = index
+//     }
+//   }
+// })
 </script>
 
 <style></style>
