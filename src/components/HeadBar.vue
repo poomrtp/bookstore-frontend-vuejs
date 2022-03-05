@@ -6,17 +6,13 @@
           <div
             class="w-full relative flex justify-between lg:w-auto px-4 lg:static lg:block lg:justify-start"
           >
-            <a
-              class="text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase text-black"
-              href="#pablo"
-            >
-              Bookstore
-            </a>
-            <button
-              class="cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none"
-              type="button"
-            >
-            </button>
+            <router-link to="/">
+              <a
+                class="text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase text-black"
+                href="#pablo">
+                Bookstore
+              </a>
+            </router-link>
           </div>
           <div class="lg:flex flex-grow items-center" id="example-navbar-warning">
             <div
@@ -78,7 +74,7 @@
                       />
                     </svg>
                   </a>
-                  <div class="dropdown-menu absolute hidden text-black pt-2 -ml-24 w-52 border">
+                  <div class="dropdown-menu absolute hidden text-black pt-2 -ml-24 w-52 z-40 border">
                     <a v-for="(item, index) in accountItems" :key="(index)" class="bg-white hover:bg-gray-50 py-2 px-4 block whitespace-no-wrap" href="#">
                       {{ item.title }}
                     </a>
@@ -112,12 +108,14 @@
           <div class="lg:flex flex-grow items-center">
             <ul class="flex flex-col lg:flex-row list-none mr-auto">
               <li class="nav-item">
-                <a
-                  class="px-4 py-2 flex items-center text-md uppercase leading-snug text-black hover:opacity-75"
-                  href="#pablo"
-                >
-                  <span>shop</span>
-                </a>
+                <router-link to="/">
+                  <a
+                    class="px-4 py-2 flex items-center text-md uppercase leading-snug text-black hover:opacity-75"
+                    href="#pablo"
+                  >
+                    <span>shop</span>
+                  </a>
+                </router-link>
               </li>
               <li class="nav-item">
                 <a

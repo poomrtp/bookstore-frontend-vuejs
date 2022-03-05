@@ -2,7 +2,7 @@
   <div class="grid grid-cols-7">
     <div class="col-span-5">
       <div class="grid grid-cols-1">
-        <product-list :products="products" @clickDetail="onClickDetail"></product-list>
+        <product-list :products="products" @clickDetail="onClickDetail($event)"></product-list>
       </div>
     </div>
     <div class="col-span-2 h-fit">
@@ -24,6 +24,7 @@ import AccountDetail from './components/AccountDetail.vue'
     ProductList,
     AccountDetail
   },
+  
   computed: {
     ...mapState('Product', ['products']),
   },

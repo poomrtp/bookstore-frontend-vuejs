@@ -1,11 +1,10 @@
 <template>
-  <!-- COMPONENT CODE -->
   <div class="flex shadow w-full min-h-full bg-white max-w-xs cursor-pointer">
     <div class="flex flex-col w-full">
       <div
         class="w-full flex flex-col h-48 min-h-48 bg-white overflow-hidden rounded-md mt-2">
         <img
-          :src="product.image"
+          :src="product.images[0]"
           class="w-auto object-scale-down overflow-hidden  mx-2"
         />
       </div>
@@ -34,7 +33,6 @@
       </div>
     </div>
   </div>
-  <!-- COMPONENT CODE -->
 </template>
 
 <script lang="ts">
@@ -45,7 +43,6 @@ import { Options, Vue } from 'vue-class-component'
   props: {
     product: {
       type: Object,
-      default: () => null
     }
   }
 })

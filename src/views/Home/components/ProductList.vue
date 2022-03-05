@@ -44,7 +44,10 @@ import ProductCard from '../../../components/ProductCard.vue'
       type: Array,
       default: () => []
     }
-  }
+  },
+  emits: [
+    'clickDetail'
+  ]
 })
 export default class ProductList extends Vue {
   private tabItems: Array<any> = [
@@ -61,7 +64,7 @@ export default class ProductList extends Vue {
   
 
   tabActive(index: number) : string {
-    return index === this.tabSelect ? 'bg-white border-t border-l border-r border-gray focus: bg-white focus: transition duration-150 ease-in-out' : 'bg-gray-100 border-t border-l border-r border-b border-gray '
+    return index === this.tabSelect ? 'bg-white border-t border-l border-r border-gray focus: bg-white' : 'bg-gray-100 border-t border-l border-r border-b border-gray '
   }
 
   tabOption(index : number) : number {

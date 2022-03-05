@@ -4,11 +4,11 @@
       <span>หนังสือ / Manga</span>
     </div>
     <div class="flex justify-center">
-      <span>หนุ่มเย็บผ้ากับสาวนักคอสเพลย์ 7</span>
+      <span>{{ product.name }}</span>
     </div>
     <div class="flex justify-evenly">
       <div>
-        <span class="text-center">โดย Fukuda Shinichi</span>
+        <span class="text-center">โดย {{ productAuthor }}</span>
       </div>
       <div>
         <span class="text-center">STAR</span>
@@ -21,10 +21,22 @@
 import { Options, Vue } from 'vue-class-component'
 
 @Options({
-  components: {}
+  components: {
+  },
+  props: {
+    product: {
+      type: Object,
+      default: () => null
+    }
+  },
+  computed: {
+    productAuthor() {
+      return this.product.author ? this.product.author.join(', ') : '-'
+    }
+  }
 })
 export default class DetailHeader extends Vue {
-  
+  // readonly product!: any
 }
 </script>
 

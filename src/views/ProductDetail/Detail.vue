@@ -1,20 +1,20 @@
 <template>
-  <div class="max-w-5xl mx-auto px-6">
+  <div class="max-w-5xl mx-auto px-6 relative">
     <div class="border-b border-gray ">
-      <detail-header></detail-header>
+      <detail-header :product="product"></detail-header>
     </div>
     <div class="grid grid-cols-2">
-      <div>
-        <image-preview></image-preview>
+      <div class="m-5">
+        <image-preview :images="product.images"></image-preview>
       </div>
-      <div>
-        <price-detail></price-detail>
+      <div class="m-5">
+        <price-detail :product="product"></price-detail>
       </div>
     </div>
     <div class="grid grid-cols-2 border-b border-gray ">
       <div class="m-4">
         เรื่องย่อ
-        <span>[ DESCRIPTION ]</span>
+        <p>{{ product.description || "-"}}</p>
       </div>
       <div class="ml-28 m-4">
         <div class="grid grid-cols-3">
@@ -31,25 +31,25 @@
             ภาพ: 
           </div>
           <div class="col-span-2">
-            [ ILLUSTRATOR ]
+            {{ productAuthor }}
           </div>
           <div class="">
             สำนักพิมพ์: 
           </div>
           <div class="col-span-2">
-            [ PUBLISHER ]
+            {{ product.publisher }}
           </div>
           <div class="">
             Genres: 
           </div>
           <div class="col-span-2">
-            [ GENRES ]
+            {{ prodcutGenres }}
           </div>
           <div class="">
             น้ำหนัก: 
           </div>
           <div class="col-span-2">
-            [ WEIGHT ]
+            {{ product.weight }} กรัม
           </div>
         </div>
       </div>
@@ -82,6 +82,12 @@ import PriceDetail from './components/PriceDetail.vue'
   },
   computed: {
     ...mapState('Product', ['product']),
+    productAuthor() {
+      return this.product.author ? this.product.author.join(', ') : '-'
+    },
+    prodcutGenres() {
+      return this.product.genres ? this.product.genres.join(', ') : '-'
+    }
   },
   methods: {
     ...mapActions({

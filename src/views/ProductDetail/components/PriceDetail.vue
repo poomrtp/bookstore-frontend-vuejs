@@ -1,22 +1,22 @@
 <template>
-  <div class="flex bg-white mt-0 h-fit mx-0 p-5">
+  <div class="flex bg-white h-fit">
     <div class="flex flex-col w-full">
       <div class="flex flex-row">
         <div class="w-3/5 border mr-1 bg-gray-100">
           <div class="flex justify-center text-sm font-bold uppercase text-black m-2 ">
-            [ BOOK TYPE ]
+            หนังสือเล่ม
           </div>
           <div class="flex justify-center text-sm font-bold uppercase text-black m-2 ">
-            [ BOOK PRICE ]
+            {{ product.price }}
           </div>
           <div class="flex justify-center text-sm font-bold uppercase text-black m-2 ">
-            [ DISCOUNT ]
+            ส่วนลด {{ product.discount || '-' }}
           </div>
         </div>
         <div class="w-2/5 border ml-1 bg-gray-100">
           <div class="flex flex-col justify-center text-sm font-bold uppercase text-black m-2">
             <div class="flex justify-center">
-              [ QUANTITY ]
+              จำนวน
             </div>
             <div class="flex justify-center">
               <div class="flex justify-center">
@@ -46,10 +46,9 @@
                       whitespace-nowrap
                     "
                     type="button"
-                    @click="activateQuantityList(true)"
-                    @blur="activateQuantityList(false)"
+                    @click="activateQuantityList(!showQuantityList)"
                   >
-                    [ VALUE ]
+                    {{ quantitySelected }}
                     <svg
                       aria-hidden="true"
                       focusable="false"
@@ -85,10 +84,12 @@
                       m-0
                       bg-clip-padding
                       border-none
-                    ">
-                    <div v-for="(index) in maxQuantity" :key="index"
+                    "
+                    @blur="activateQuantityList(false)">
+                    <div
+                      v-for="(value) in maxQuantity" :key="value"
                       class="w-20">
-                      <a
+                      <span
                         class="
                           dropdown-item
                           text-sm
@@ -98,13 +99,13 @@
                           block
                           w-full
                           whitespace-nowrap
-                          bg-transparent
                           text-gray-700
                           hover:bg-gray-100
+                          cursor-pointer
                         "
-                        href="#"
-                        >{{ index }}</a
-                      >
+                        @click="onSelectQuantity(value)">
+                        {{ value }}
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -113,14 +114,19 @@
           </div>
         </div>
       </div>
-      <div class="bg-gray-50 ">
-        <div class="mx-2">
-          <div class="text-sm font-bold uppercase text-green-600 my-2 ">
-            submenu1
+      <div class="flex flex-wrap">
+        <div 
+          v-for="(type, index) in productTypes"
+          :key="type"
+          class="mr-2">
+          <div 
+            :class="productTypeActive(index)"
+            class="text-sm w-28 font-bold text-center uppercase 
+            text-blue-500 bg-gray-50 py-4 my-2 rounded"
+            @click="onSelectProductType(index)">
+            <p>{{ type.type }}</p>
+            <p>{{ type.price }}</p>
           </div>
-          <div class="text-sm text-start">submenu1</div>
-          <div class="text-sm text-start">submenu2</div>
-          <div class="text-sm text-start">submenu3</div>
         </div>
       </div>
     </div>
@@ -131,16 +137,52 @@
 import { Options, Vue } from 'vue-class-component'
 
 @Options({
-  components: {}
+  components: {},
+  props: {
+    product: {
+      type: Object,
+      default: () => null
+    }
+  }
 })
 export default class PriceDetail extends Vue {
+  readonly product!: any
+
+  private quantitySelected = 1
+  private productTypeSelected = 0
   private maxQuantity = 10
   private quantitySelect = 0
   private showQuantityList = false
+  private productTypes = [
+    {
+      type: 'หนังสือเล่ม',
+      price: this.product.price || 0
+    },
+    {
+      type: 'อีบุ๊ค',
+      price: this.product.digitalPrice || 0
+    },
+
+  ]
 
   activateQuantityList(status: boolean) : boolean {
     return this.showQuantityList = status
   }
+
+  onSelectQuantity(value: number): void {
+    this.quantitySelected = value
+    this.activateQuantityList(false)
+  }
+
+  onSelectProductType(index: number): void {
+    this.productTypeSelected = index
+  }
+
+  productTypeActive(index: number): string {
+    return index === this.productTypeSelected ? 'bg-white border border-blue-500 focus: bg-white hover:border-blue-500' : 
+    'bg-gray-100 border border-gray hover:border-blue-500'
+  }
+
 }
 </script>
 
