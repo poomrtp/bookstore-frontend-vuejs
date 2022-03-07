@@ -81,10 +81,9 @@
                   </div>
                 </div>
               </div>
-              <div class="nav-item">
+              <div class="nav-item" @click="activeCartbar()">
                 <a
                   class="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-black hover:opacity-75"
-                  href="#pablo"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -164,8 +163,10 @@ import { Options, Vue } from 'vue-class-component'
 
 @Options({
   props: {
-    msg: String
-  }
+  },
+  emits: [
+    'onActiveCartbar'
+  ]
 })
 export default class HeadBar extends Vue {
   private showAccountDropdown = false
@@ -195,6 +196,11 @@ export default class HeadBar extends Vue {
   activateAccountDropdown() : boolean {
     return this.showAccountDropdown = !this.showAccountDropdown
   }
+
+  activeCartbar(): void {
+    this.$emit('onActiveCartbar', true)
+  }
+
 }
 </script>
 <style>

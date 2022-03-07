@@ -5,7 +5,7 @@
         <product-list :products="products" @clickDetail="onClickDetail($event)"></product-list>
       </div>
     </div>
-    <div class="col-span-2 h-fit">
+    <div class="col-span-2 h-fit invisible md:visible">
       <div class="flex justify-end">
         <account-detail></account-detail>
       </div>
