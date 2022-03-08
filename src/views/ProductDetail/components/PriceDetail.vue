@@ -3,13 +3,13 @@
     <div class="flex flex-col w-full">
       <div class="flex flex-row">
         <div class="w-3/5 border mr-1 bg-gray-100">
-          <div class="flex justify-center text-sm font-bold uppercase text-black m-2 ">
-            หนังสือเล่ม
+          <div class="flex justify-center text-sm font-bold uppercase text-black m-2">
+            {{ isBook ? 'หนังสือเล่ม' : 'อีบุ๊ค' }}
           </div>
-          <div class="flex justify-center text-sm font-bold uppercase text-black m-2 ">
-            {{ product.price }}
+          <div class="flex justify-center text-sm font-bold uppercase text-black m-2">
+            {{ isBook ? product.price : product.digitalPrice }}
           </div>
-          <div class="flex justify-center text-sm font-bold uppercase text-black m-2 ">
+          <div class="flex justify-center text-sm font-bold uppercase text-black m-2">
             ส่วนลด {{ product.discount || '-' }}
           </div>
         </div>
@@ -32,17 +32,22 @@
       </div>
       <div class="flex flex-wrap">
         <div 
-          v-for="(type, index) in productTypes"
-          :key="type"
-          class="mr-2">
-          <div 
-            :class="productTypeActive(index)"
-            class="text-sm w-28 font-bold text-center uppercase 
-            text-blue-500 bg-gray-50 py-4 my-2 rounded"
-            @click="onSelectProductType(index)">
-            <p>{{ type.type }}</p>
-            <p>{{ type.price }}</p>
-          </div>
+          v-if="product.price"
+          :class="productTypeActive('book')"
+          class="text-sm w-28 font-bold text-center uppercase cursor-pointer
+          bg-gray-50 py-4 my-2 mr-2 rounded"
+          @click="onSelectProductType('book')">
+          <p>หนังสือเล่ม</p>
+          <p>{{ product.price }}</p>
+        </div>
+        <div
+          v-if="product.digitalPrice"
+          :class="productTypeActive('e-book')"
+          class="text-sm w-28 font-bold text-center uppercase cursor-pointer
+          bg-gray-50 py-4 my-2 rounded"
+          @click="onSelectProductType('e-book')">
+          <p>อีบุ๊ค</p>
+          <p>{{ product.digitalPrice }}</p>
         </div>
       </div>
     </div>
@@ -58,28 +63,50 @@ import { Options, Vue } from 'vue-class-component'
     product: {
       type: Object,
       default: () => null
+    },
+    typeSelected: {
+      type: String
     }
+  },
+  emits: [
+    'onSelectProductType'
+  ],
+  computed: {
+    isBook(): boolean {
+      return 'book' === this.typeSelected
+  }
   }
 })
 export default class PriceDetail extends Vue {
   readonly product!: any
+  readonly typeSelected!: string
 
   private quantitySelected = 1
-  private productTypeSelected = 0
+  private productTypeSelected = this.product.digitalPrice ? 'e-book' : 'book'
   private maxQuantity = 10
   private quantitySelect = 0
   private showQuantityList = false
   private productTypes = [
     {
-      type: 'หนังสือเล่ม',
-      price: this.product.price || 0
+      typeTH: 'หนังสือเล่ม',
+      type: 'book'
     },
     {
-      type: 'อีบุ๊ค',
-      price: this.product.digitalPrice || 0
-    },
-
+      typeTH: 'อีบุ๊ค',
+      type: 'e-book'
+    }
   ]
+  private productTypeText = [
+    {
+      book: 'หนังสือเล่ม',
+      type: 'book',
+      eBook: 'อีบุ๊ค'
+    }
+  ]
+
+  // created(): void {
+
+  // }
 
   activateQuantityList(status: boolean) : boolean {
     return this.showQuantityList = status
@@ -90,14 +117,18 @@ export default class PriceDetail extends Vue {
     this.activateQuantityList(false)
   }
 
-  onSelectProductType(index: number): void {
-    this.productTypeSelected = index
+  onSelectProductType(type: string): void {
+    this.$emit('onSelectProductType', type)
   }
 
-  productTypeActive(index: number): string {
-    return index === this.productTypeSelected ? 'bg-white border border-blue-500 focus: bg-white hover:border-blue-500' : 
-    'bg-gray-100 border border-gray hover:border-blue-500'
+  productTypeActive(type: string): string {
+    return type === this.typeSelected ? 'bg-white text-black border-2 border-blue-500 focus: bg-white hover:border hover:border-border-blue-500' : 
+    'bg-gray-100 text-gray-500 border border-gray-500 hover:border hover:border-blue-500 hover:text-black'
   }
+
+  // isBook(): boolean {
+  //     return 'book' === this.typeSelected
+  // }
 
 }
 </script>

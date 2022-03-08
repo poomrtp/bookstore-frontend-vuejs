@@ -47,7 +47,6 @@ export default class PreviewImage extends Vue {
   private imageIndex = 0
 
   onSelectImage(status: boolean, index: number): void {
-    console.log(status, index)
     this.onActivePreviewImageModal(status)
     this.selectedImage(index)
   }

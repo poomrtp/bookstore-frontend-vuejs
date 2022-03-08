@@ -8,7 +8,7 @@
           class="w-auto object-scale-down overflow-hidden mx-2"
         />
       </div>
-      <div class="mx-2 h-52">
+      <div class="mx-2 h-36">
         <div class="">
           <span class="text-sm font-bold uppercase text-green-600 my-2">
             {{ product.productType || 'Manga' }}
@@ -23,12 +23,22 @@
           </p>
         </div>
       </div>
-      <div class="flex justify-between mx-2 mb-4">
-        <div>
-          {{ product.price }}
+      <div class="flex flex-col mx-2 mb-1 h-16 justify-end">
+        <div v-if="product.price" class="flex justify-between">
+          <div class="mb-1 px-2 rounded bg-yellow-500 text-white">
+            {{ product.price }}
+          </div>
+          <div>
+            หนังสือ
+          </div>
         </div>
-        <div>
-          {{ product.category || 'E-book' }}
+        <div v-if="product.digitalPrice" class="flex justify-between">
+          <div class="mb-1 px-2 rounded bg-yellow-500 text-white">
+            {{ product.digitalPrice }}
+          </div>
+          <div>
+            อีบุ๊ค
+          </div>
         </div>
       </div>
     </div>
@@ -49,4 +59,8 @@ import { Options, Vue } from 'vue-class-component'
 export default class ProductCart extends Vue {}
 </script>
 
-<style></style>
+<style>
+._price-color {
+  background-color: #ef5e24;
+}
+</style>

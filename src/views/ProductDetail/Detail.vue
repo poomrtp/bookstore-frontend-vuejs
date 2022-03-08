@@ -8,7 +8,10 @@
         <image-preview :images="product.images"></image-preview>
       </div>
       <div class="m-5">
-        <price-detail :product="product"></price-detail>
+        <price-detail
+          :product="product"
+          :typeSelected="typeSelected"
+          @onSelectProductType="onSelectProductType"></price-detail>
       </div>
     </div>
     <div class="grid grid-cols-2 border-b border-gray ">
@@ -103,14 +106,22 @@ export default class Detail extends Vue {
   readonly product!: any
   readonly name!: any
   private isActivePreviewImageModal = false
+  private typeSelected = 'book'
 
   async created(): Promise<void> {
+    console.log(this.name)
     await this.fetchProductsByName(this.name)
+    this.typeSelected = this.product.price ? 'book' : 'e-book'
+    console.log('this.typeSelected', this.typeSelected)
     console.log('this.product', this.product)
   }
 
   onActivePreviewImageModal(): void {
     this.isActivePreviewImageModal = true
+  }
+
+  onSelectProductType(type: string): void {
+    this.typeSelected = type
   }
 }
 </script>

@@ -2,7 +2,7 @@
   <div
     class="flex justify-center w-full h-full z-20"
     :class="isActive ? '' : 'hidden'">
-    <div class="fixed top-1/4 left-0 w-full h-screen sm:top-4">
+    <div class="fixed top-1/4 left-0 w-full sm:top-4">
       <div 
         class="fixed top-0 left-0 w-full h-screen bg-black bg-opacity-80 transition-all duration-300"
         :class="isActive ? '' : 'hidden'"
@@ -11,10 +11,10 @@
       <div 
         class="relative mb-4"
         :class="isActive ? '' : 'hidden'">
-        <div class="flex justify-center h-96">
+        <div class="flex justify-center h-full">
           <img 
             :src="images[imageIndex]"
-            class="w-auto h-96 cursor-pointer z-40">
+            class="w-96 h-auto cursor-pointer z-40">
         </div>
         <div class="flex flex-wrap justify-center h-24 overflow-hidden mt-4">
           <div class="m-1 " v-for="(image, index) in images" :key="image">

@@ -13,7 +13,7 @@ const actions = {
     console.log('fetchProducts', result)
     store.commit('SET_PRODUCTS', result)
   },
-  async fetchProductsByName ( store: ActionContext<typeof state, any>, params: string): Promise<void> {
+  async fetchProductsByName(store: ActionContext<typeof state, any>, params: string): Promise<void> {
     const result = await ProductService.fetchProductsByName(params)
     console.log('fetchProductsByName', result)
     store.commit('SET_PRODUCT', result)
