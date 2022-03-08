@@ -81,7 +81,7 @@
                   </div>
                 </div>
               </div>
-              <div class="nav-item" @click="activeCartbar()">
+              <div class="nav-item" @click="onActiveCartbar(true)">
                 <a
                   class="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-black hover:opacity-75"
                 >
@@ -156,12 +156,17 @@
       </div>
     </nav>
   </div>
+  <cart-bar :isActive="isActive" @onActiveCartbar="onActiveCartbar($event)"></cart-bar>
 </template>
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
+import CartBar from './CartBar.vue'
 
 @Options({
+  components: {
+    CartBar
+  },
   props: {
   },
   emits: [
@@ -169,6 +174,7 @@ import { Options, Vue } from 'vue-class-component'
   ]
 })
 export default class HeadBar extends Vue {
+  private isActive = false
   private showAccountDropdown = false
   private accountItems = [
     {
@@ -197,8 +203,8 @@ export default class HeadBar extends Vue {
     return this.showAccountDropdown = !this.showAccountDropdown
   }
 
-  activeCartbar(): void {
-    this.$emit('onActiveCartbar', true)
+  onActiveCartbar(status: boolean): void {
+    this.isActive = status
   }
 
 }

@@ -1,11 +1,11 @@
 <template>
-  <div class="flex shadow w-full min-h-full bg-white max-w-xs cursor-pointer">
+  <div class="flex border-2 border-gray-200 w-full min-h-full bg-white max-w-xs cursor-pointer rounded-lg">
     <div class="flex flex-col w-full">
       <div
         class="w-full flex flex-col h-48 min-h-48 bg-white overflow-hidden rounded-md mt-2">
         <img
           :src="product.images[0]"
-          class="w-auto object-scale-down overflow-hidden  mx-2"
+          class="w-auto object-scale-down overflow-hidden mx-2"
         />
       </div>
       <div class="mx-2 h-52">

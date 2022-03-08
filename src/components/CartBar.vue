@@ -3,7 +3,7 @@
     <div 
       class="z-20
         top-0 fixed
-        h-screen w-9/12 lg:w-72 
+        h-screen w-9/12 sm:w-72 
         bg-white 
         overflow-y-auto
         "
@@ -52,7 +52,7 @@
         </div>
       </nav>
     </div>
-    <div class="z-10 fixed top-0 w-full h-screen bg-gray-900 bg-opacity-30 transition-all duration-300"
+    <div class="z-10 fixed top-0 w-full h-screen bg-gray-900 bg-opacity-30 duration-700"
       :class="isActive ? '' : 'hidden'" @click="onBlur"></div>
   </div>
 </template>

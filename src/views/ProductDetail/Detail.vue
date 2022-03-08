@@ -1,5 +1,5 @@
 <template>
-  <div class="max-w-5xl mx-auto px-6 relative">
+  <div class="max-w-5xl mx-auto px-6 w-full">
     <div class="border-b border-gray ">
       <detail-header :product="product"></detail-header>
     </div>
@@ -55,6 +55,7 @@
       </div>
     </div>
   </div>
+  <!-- <preview-image-modal></preview-image-modal> -->
 </template>
 
 <script lang="ts">
@@ -63,12 +64,14 @@ import { mapState, mapActions } from 'vuex'
 import DetailHeader from './components/DetailHeader.vue'
 import ImagePreview from './components/ImagePreview.vue'
 import PriceDetail from './components/PriceDetail.vue'
+import PreviewImageModal from '@/components/PreviewImageModal.vue'
 
 @Options({
   components: {
     DetailHeader,
     ImagePreview,
-    PriceDetail
+    PriceDetail,
+    PreviewImageModal
   },
   props: {
     name: {
@@ -99,10 +102,15 @@ export default class Detail extends Vue {
   readonly fetchProductsByName!: any
   readonly product!: any
   readonly name!: any
+  private isActivePreviewImageModal = false
 
   async created(): Promise<void> {
     await this.fetchProductsByName(this.name)
     console.log('this.product', this.product)
+  }
+
+  onActivePreviewImageModal(): void {
+    this.isActivePreviewImageModal = true
   }
 }
 </script>
