@@ -10,16 +10,21 @@
 </template>
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
+import { mapState } from 'vuex'
 import HeadBar from '@/components/HeadBar.vue'
 
 @Options({
   components: {
     HeadBar
+  },
+  computed: {
+    ...mapState('Cart', ['cart'])
   }
 })
 export default class Home extends Vue {
 
   private isActive = false
+  // private cart = []
 
   onBlur():void {
     console.log('onBlur')

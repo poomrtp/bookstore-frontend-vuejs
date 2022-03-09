@@ -11,7 +11,20 @@
         <price-detail
           :product="product"
           :typeSelected="typeSelected"
-          @onSelectProductType="onSelectProductType"></price-detail>
+          @onSelectProductType="onSelectProductType"
+          @onSelectQuantity="onSelectQuantity">
+        </price-detail>
+        <div class="flex justify-between">
+          <button
+            class="w-full my-1 mr-1 py-2 text-blue-500 border border-blue-500 rounded">
+            BUY NOW
+          </button>
+          <button
+            class="w-full my-1 py-2 text-white bg-blue-500 rounded"
+            @click="addProductToCart()">
+            ADD TO CART
+          </button>
+        </div>
       </div>
     </div>
     <div class="grid grid-cols-2 border-b border-gray ">
@@ -58,7 +71,6 @@
       </div>
     </div>
   </div>
-  <!-- <preview-image-modal></preview-image-modal> -->
 </template>
 
 <script lang="ts">
@@ -88,6 +100,7 @@ import PreviewImageModal from '@/components/PreviewImageModal.vue'
   },
   computed: {
     ...mapState('Product', ['product']),
+    ...mapState('Cart', ['cart']),
     productAuthor() {
       return this.product.author ? this.product.author.join(', ') : '-'
     },
@@ -98,20 +111,29 @@ import PreviewImageModal from '@/components/PreviewImageModal.vue'
   methods: {
     ...mapActions({
       fetchProductsByName: 'Product/fetchProductsByName'
+    }),
+    ...mapActions({
+      addToCart: 'Cart/addToCart',
+      fetchCart: 'Cart/fetchCart'
     })
+    
   }
 })
 export default class Detail extends Vue {
   readonly fetchProductsByName!: any
+  readonly fetchCart!: any
+  readonly addToCart!: any
   readonly product!: any
   readonly name!: any
   private isActivePreviewImageModal = false
-  private typeSelected = 'book'
+  private typeSelected = null
+  private quantitySelected = 1 
 
   async created(): Promise<void> {
     console.log(this.name)
     await this.fetchProductsByName(this.name)
-    this.typeSelected = this.product.price ? 'book' : 'e-book'
+    await this.fetchCart()
+    this.typeSelected = this.product?.types[0] || null
     console.log('this.typeSelected', this.typeSelected)
     console.log('this.product', this.product)
   }
@@ -120,9 +142,42 @@ export default class Detail extends Vue {
     this.isActivePreviewImageModal = true
   }
 
-  onSelectProductType(type: string): void {
+  onSelectProductType(type: any): void {
     this.typeSelected = type
   }
+
+  onSelectQuantity(value: number):void {
+    this.quantitySelected = value
+  }
+
+  async addProductToCart(): Promise<void> {
+    const payload = {
+      id: this.product.id,
+      name: this.product.name,
+      author: this.product.author,
+      illustrator : this.product.illustrator,
+      description: this.product.description,
+      publisher: this.product.publisher,
+      genres: this.product.genres,
+      publishedAt: this.product.publishedAt,
+      weight: this.product.weight,
+      images: this.product.images,
+      status: this.product.status,
+      category: this.product.category,
+      quantity: this.quantitySelected,
+      type: this.typeSelected
+    }
+    try {
+      await this.addToCart(payload)
+      await this.fetchCart()
+    } catch(error) {
+      console.log(error)
+    }
+  }
+
+  // async fetchCart(): Promise<void> {
+  //   await this.fetchCart()
+  // }
 }
 </script>
 

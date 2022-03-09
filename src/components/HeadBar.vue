@@ -156,7 +156,10 @@
       </div>
     </nav>
   </div>
-  <cart-bar :isActive="isActive" @onActiveCartbar="onActiveCartbar($event)"></cart-bar>
+  <cart-bar 
+    :isActive="isActive"
+    @onActiveCartbar="onActiveCartbar($event)">
+  </cart-bar>
 </template>
 
 <script lang="ts">

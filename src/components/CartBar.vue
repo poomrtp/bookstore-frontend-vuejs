@@ -12,7 +12,6 @@
         <div class="flex justify-center gap-4 pb-4 w-full">
           <button>สั่งซื้อสินค้า</button>
         </div>
-
         <div class="relative">
           <form action="" class="text-gray-500 focus-within:text-cyan-400 focus-within:bg-white focus-within:shadow rounded search transition duration-300">
             <div class="relative w-full">
@@ -45,7 +44,7 @@
             <li>
               <a href="" class="flex gap-4 text-gray-600 hover:text-gray-800 transition">
                 <img src="https://raw.githubusercontent.com/Meschacirung/Tailus-website/f59a4b3ecc1ad9f6a2b0ad9e3fca6f957140cc4d/public/images/icons/template.svg" class="w-6" alt="" />
-                Default look
+                {{ cart }}
               </a>
             </li>
           </ul>
@@ -58,6 +57,7 @@
 </template>
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
+import { mapState } from 'vuex'
 
 @Options({
   components: {
@@ -67,10 +67,16 @@ import { Options, Vue } from 'vue-class-component'
       type: Boolean,
       default: false
     },
+    // cart: {
+
+    // }
   },
   emits: [
     'onActiveCartbar'
-  ]
+  ],
+  computed: {
+    ...mapState('Cart', ['cart'])
+  }
 })
 export default class Detail extends Vue {
   readonly isActive!: boolean

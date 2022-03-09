@@ -20,7 +20,11 @@
             </div>
             <div class="flex justify-center">
               <div class="">
-                <select v-model="quantitySelected" class="w-14 h-9">
+                <select 
+                  v-model="quantitySelected" 
+                  :disabled="typeSelected?.name === 'e-book' || false" 
+                  class="w-14 h-9" 
+                  @change="onSelectQuantity(quantitySelected)">
                   <option v-for="value in maxQuantity" :key="value">
                     {{ value }}
                   </option>
@@ -31,23 +35,13 @@
         </div>
       </div>
       <div class="flex flex-wrap">
-        <div 
-          v-if="product.price"
-          :class="productTypeActive('book')"
+        <div v-for="type in product.types" :key="type"
+          :class="productTypeActive(type)"
           class="text-sm w-28 font-bold text-center uppercase cursor-pointer
           bg-gray-50 py-4 my-2 mr-2 rounded"
-          @click="onSelectProductType('book')">
-          <p>หนังสือเล่ม</p>
-          <p>{{ product.price }}</p>
-        </div>
-        <div
-          v-if="product.digitalPrice"
-          :class="productTypeActive('e-book')"
-          class="text-sm w-28 font-bold text-center uppercase cursor-pointer
-          bg-gray-50 py-4 my-2 rounded"
-          @click="onSelectProductType('e-book')">
-          <p>อีบุ๊ค</p>
-          <p>{{ product.digitalPrice }}</p>
+          @click="onSelectProductType(type)">
+          <p>{{ type.nameTH }}</p>
+          <p>{{ type.price }}</p>
         </div>
       </div>
     </div>
@@ -65,14 +59,17 @@ import { Options, Vue } from 'vue-class-component'
       default: () => null
     },
     typeSelected: {
-      type: String
+      type: Object,
+      default: () => null
     }
   },
   emits: [
-    'onSelectProductType'
+    'onSelectProductType',
+    'onSelectQuantity'
   ],
   computed: {
     isBook(): boolean {
+      this.quantitySelected = 1
       return 'book' === this.typeSelected
   }
   }
@@ -113,11 +110,10 @@ export default class PriceDetail extends Vue {
   }
 
   onSelectQuantity(value: number): void {
-    this.quantitySelected = value
-    this.activateQuantityList(false)
+    this.$emit('onSelectQuantity', +value)
   }
 
-  onSelectProductType(type: string): void {
+  onSelectProductType(type: any): void {
     this.$emit('onSelectProductType', type)
   }
 

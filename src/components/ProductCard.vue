@@ -11,7 +11,7 @@
       <div class="mx-2 h-36">
         <div class="">
           <span class="text-sm font-bold uppercase text-green-600 my-2">
-            {{ product.productType || 'Manga' }}
+            {{ product.category || 'Manga' }}
           </span>
         </div>
         <div>

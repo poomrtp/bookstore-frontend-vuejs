@@ -1,7 +1,7 @@
 <template>
   <div class="w-full">
     <div class="flex justify-center">
-      <span>หนังสือ / Manga</span>
+      <span>{{ product.category }}</span>
     </div>
     <div class="flex justify-center">
       <span>{{ product.name }}</span>
