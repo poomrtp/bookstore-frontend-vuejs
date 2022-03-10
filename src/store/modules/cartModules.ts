@@ -12,7 +12,14 @@ const actions = {
   },
   async addToCart(store: ActionContext<typeof state, any>, params: string): Promise<void> {
     await CartService.addToCart(params)
-  }
+  },
+  async editCart(store: ActionContext<typeof state, any>, params: string): Promise<void> {
+    await CartService.editCart(params)
+  },
+  async removeItem(store: ActionContext<typeof state, any>, params: string): Promise<void> {
+    console.log('removeItem-module')
+    await CartService.removeItem(params)
+  },
 
 }
 const mutations = {

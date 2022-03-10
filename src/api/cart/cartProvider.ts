@@ -21,6 +21,26 @@ class CartProvider {
       return res.data
     })
   }
+
+  editCart(payload: any): any {
+    return axios.patch(apiURL + 'edit', payload, {
+      headers: {
+        Authorization: 'poom'
+      }
+    }).then(res => {
+      return res.data
+    })
+  }
+
+  removeItem(payload: any): any {
+    return axios.patch(apiURL + 'remove', payload, {
+      headers: {
+        Authorization: 'poom'
+      }
+    }).then(res => {
+      return res.data
+    })
+  }
 }
 
 export default CartProvider

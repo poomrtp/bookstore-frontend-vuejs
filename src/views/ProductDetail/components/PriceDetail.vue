@@ -83,23 +83,23 @@ export default class PriceDetail extends Vue {
   private maxQuantity = 10
   private quantitySelect = 0
   private showQuantityList = false
-  private productTypes = [
-    {
-      typeTH: 'หนังสือเล่ม',
-      type: 'book'
-    },
-    {
-      typeTH: 'อีบุ๊ค',
-      type: 'e-book'
-    }
-  ]
-  private productTypeText = [
-    {
-      book: 'หนังสือเล่ม',
-      type: 'book',
-      eBook: 'อีบุ๊ค'
-    }
-  ]
+  // private productTypes = [
+  //   {
+  //     typeTH: 'หนังสือเล่ม',
+  //     type: 'book'
+  //   },
+  //   {
+  //     typeTH: 'อีบุ๊ค',
+  //     type: 'e-book'
+  //   }
+  // ]
+  // private productTypeText = [
+  //   {
+  //     book: 'หนังสือเล่ม',
+  //     type: 'book',
+  //     eBook: 'อีบุ๊ค'
+  //   }
+  // ]
 
   // created(): void {
 
@@ -113,12 +113,12 @@ export default class PriceDetail extends Vue {
     this.$emit('onSelectQuantity', +value)
   }
 
-  onSelectProductType(type: any): void {
-    this.$emit('onSelectProductType', type)
+  onSelectProductType(productType: any): void {
+    this.$emit('onSelectProductType', productType)
   }
 
-  productTypeActive(type: string): string {
-    return type === this.typeSelected ? 'bg-white text-black border-2 border-blue-500 focus: bg-white hover:border hover:border-border-blue-500' : 
+  productTypeActive(productType: string): string {
+    return productType === this.typeSelected ? 'bg-white text-black border-2 border-blue-500 focus: bg-white hover:border hover:border-border-blue-500' : 
     'bg-gray-100 text-gray-500 border border-gray-500 hover:border hover:border-blue-500 hover:text-black'
   }
 

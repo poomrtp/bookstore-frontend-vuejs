@@ -27,19 +27,23 @@ import AccountDetail from './components/AccountDetail.vue'
   
   computed: {
     ...mapState('Product', ['products']),
+    ...mapState('Cart', ['cart']),
   },
   methods: {
     ...mapActions({
-      fetchProducts: 'Product/fetchProducts'
+      fetchProducts: 'Product/fetchProducts',
+      fetchCart: 'Cart/fetchCart'
     })
   }
 })
 export default class Home extends Vue {
   readonly fetchProducts!: any
   readonly products!: any
+  readonly fetchCart!: any
 
   async created(): Promise<void> {
     await this.fetchProducts()
+    await this.fetchCart()
     console.log('this.products', this.products)
   }
 
