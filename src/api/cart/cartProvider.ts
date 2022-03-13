@@ -11,6 +11,15 @@ class CartProvider {
       return res.data
     })
   }
+  fetchFinalCart(): any {
+    return axios.get(apiURL+ 'getfull', {
+      headers: {
+        Authorization: 'poom'
+      }
+    }).then(res => {
+      return res.data
+    })
+  }
 
   addToCart(payload: any): any {
     return axios.post(apiURL + 'add-to-cart', payload, {

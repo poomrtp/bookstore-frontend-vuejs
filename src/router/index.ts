@@ -14,6 +14,11 @@ const routes: Array<RouteRecordRaw> = [
     props: true
   },
   {
+    path: '/cart',
+    name: 'cart-detail',
+    component: () => import('../views/Cart/Detail.vue'),
+  },
+  {
     path: '/about',
     name: 'About',
     // route level code-splitting

@@ -1,23 +1,23 @@
 <template>
-  <div class="flex justify-center border h-fit mx-0 p-2">
-    <div class="flex-none items-center w-fit my-auto">
-      <img :src="cart?.images[0]" alt="" class="h-24 w-auto" >
+  <div class="flex justify-center w-fit bg-white p-2">
+    <div class="flex-none justify-start items-center w-fit max-w-fit overflow-hidden">
+      <img :src="productItem?.images[0]" alt="" class="flex items-start h-32 w-auto">
     </div>
-    <div class="w-full flex items-start ml-1">
-      {{ cart.name }}
+    <div class="w-full flex items-start">
+      {{ productItem.name }}
     </div>
     <div class="flex items-center">
       <select 
-        v-model="cart.quantity" 
-        :disabled="cart.type?.name === 'e-book' || false" 
+        v-model="productItem.quantity" 
+        :disabled="productItem.seller === 'e-book' || false" 
         class="w-14 h-9 border" 
-        @change="onSelectQuantity(cart.quantity)">
+        @change="onSelectQuantity(productItem.quantity)">
         <option v-for="value in maxQuantity" :key="value">
           {{ value }}
         </option>
       </select>
     </div>
-    <div class="w-2/6 flex justify-center items-center"
+    <div class="w-1/6 flex justify-center items-center"
       @click="onRemoveItem">
       <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
         <path fill-rule="evenodd"
@@ -27,6 +27,7 @@
           clip-rule="evenodd" />
       </svg>
     </div>
+
   </div>
 </template>
 
@@ -35,40 +36,35 @@ import { Options, Vue } from 'vue-class-component'
 
 @Options({
   components: {
+
   },
   props: {
-    isActive: {
-      type: Boolean,
-      default: false
-    },
-    cart: {
+    productItem: {
       type: Object,
       default: () => null
     }
   },
-  emits: [
-    'onSelectQuantity',
-    'onRemoveItem'
-  ],
   computed: {
 
+  },
+  methods: {
+    
   }
 })
-export default class CartItem extends Vue {
-  readonly isActive!: boolean
-  readonly cart!: any
-  private quantitySelected = 1
+
+export default class ItemDetail extends Vue {
+  readonly fetchCart!: any
+  readonly productItem!: any
+
   private maxQuantity = 10
-  private quantitySelect = 0
-  private showQuantityList = false
+
   // async created(): Promise<void> {
-
+  //   await this.fetchCart()
   // }
-
   onSelectQuantity(value: number): void {
     const data = {
-      ...this.cart,
-      quantity: +this.cart.quantity
+      ...this.productItem,
+      quantity: +this.productItem.quantity
     }
     // console.log('cart-cartitem', data)
     this.$emit('onSelectQuantity', data)
@@ -76,7 +72,8 @@ export default class CartItem extends Vue {
 
   onRemoveItem(): void {
     // console.log('cart-cartitem', data)
-    this.$emit('onRemoveItem', this.cart)
+    this.$emit('onRemoveItem', this.productItem)
   }
+
 }
 </script>
