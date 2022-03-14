@@ -50,6 +50,16 @@ class CartProvider {
       return res.data
     })
   }
+
+  createOrder(payload: any): any {
+    return axios.patch(apiURL + 'checkout', payload, {
+      headers: {
+        Authorization: 'poom'
+      }
+    }).then(res => {
+      return res.data
+    })
+  }
 }
 
 export default CartProvider

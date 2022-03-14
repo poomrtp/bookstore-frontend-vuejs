@@ -1,27 +1,7 @@
 <template>
   <div class="max-w-5xl mx-auto">
-    Your Cart
-    <div class="bg-blue-300 p-2" @click="onSubmitOrder">CHECKOUT</div>
-    <div
-      v-for="order in ebookItems"
-      :key="order"
-      class="w-full">
-      <item-card
-        :productItem="order"
-        @onSelectQuantity="onSelectQuantity"
-        @onRemoveItem="onRemoveItem">
-      </item-card>
-    </div>
-    <div
-      v-for="order in nonEbookItems"
-      :key="order"
-      class="w-full">
-      <item-card
-        :productItem="order"
-        @onSelectQuantity="onSelectQuantity"
-        @onRemoveItem="onRemoveItem">
-      </item-card>
-    </div>
+    Payment
+    <div class="bg-blue-300 p-2" @click="onSubmitCheckout">CONFIRM</div>
   </div>
 </template>
 
@@ -48,7 +28,8 @@ import ItemCard from './components/ItemCard.vue'
       fetchFinalCart: 'Cart/fetchFinalCart',
       editCart: 'Cart/editCart',
       removeItem: 'Cart/removeItem',
-      createOrder: 'Order/createOrder'
+      createOrder: 'Order/createOrder',
+      checkoutOrder: 'Order/checkoutOrder'
     })
     
   }
@@ -60,6 +41,7 @@ export default class CartDetail extends Vue {
   readonly editCart!: any
   readonly removeItem!: any
   readonly createOrder!: any
+  readonly checkoutOrder!: any
 
   private ebookItems: any = []
   private nonEbookItems: any = []
@@ -75,25 +57,11 @@ export default class CartDetail extends Vue {
     this.nonEbookItems = this.finalCart.orders.filter((seller: any) => seller.seller !== 'e-book')
   }
 
-  async onSubmitOrder(): Promise<void> {
-    await this.createOrder(this.finalCart)
-    this.$router.push({ name: 'checkout' })
+  async onSubmitCheckout(): Promise<void> {
+    await this.checkoutOrder(this.finalCart)
   }
 
-  async onSelectQuantity(payload: any): Promise<void> {
-    console.log('onSelectQuantity', payload)
-    await this.editCart(payload)
-    await this.fetchCart()
-    await this.fetchFinalCart()
-  }
 
-  async onRemoveItem(payload: any): Promise<void> {
-    console.log('onRemoveItem', payload)
-    await this.removeItem(payload)
-    await this.fetchCart()
-    await this.fetchFinalCart()
-    this.splitEbookData()
-  }
 }
 </script>
 

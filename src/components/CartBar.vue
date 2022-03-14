@@ -10,7 +10,9 @@
       :class="isActive ? 'right-0 duration-300 ease-out' : '-right-96 duration-300 ease-out'">
       <nav v-if="cart?.cartItems" class="py-2">
         <div class="flex justify-center gap-4 pb-4 w-full">
-          <button class="border border-gray-500 p-2 rounded-full">สั่งซื้อสินค้า</button>
+          <router-link to="/cart">
+            <button class="border border-gray-500 p-2 rounded-full">สั่งซื้อสินค้า</button>
+          </router-link>
         </div>
         <div class="relative">
           <form action="" class="text-gray-500 focus-within:text-cyan-400 focus-within:bg-white focus-within:shadow rounded search transition duration-300">

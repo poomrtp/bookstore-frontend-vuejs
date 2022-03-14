@@ -19,6 +19,11 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('../views/Cart/Detail.vue'),
   },
   {
+    path: '/checkout',
+    name: 'checkout',
+    component: () => import('../views/Cart/Checkout.vue'),
+  },
+  {
     path: '/about',
     name: 'About',
     // route level code-splitting

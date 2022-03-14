@@ -25,6 +25,10 @@ const actions = {
     console.log('removeItem-module')
     await CartService.removeItem(params)
   },
+  async createOrder(store: ActionContext<typeof state, any>, params: string): Promise<void> {
+    console.log('createOrder-module')
+    await CartService.createOrder(params)
+  },
 
 }
 const mutations = {
