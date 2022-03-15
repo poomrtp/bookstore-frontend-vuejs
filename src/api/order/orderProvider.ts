@@ -22,6 +22,16 @@ class OrderProvider {
       return res.data
     })
   }
+
+  getOrderByUser(): any {
+    return axios.get(apiURL + '/get-order', {
+      headers: {
+        Authorization: 'poom'
+      }
+    }).then(res => {
+      return res.data
+    })
+  }
 }
 
 export default OrderProvider

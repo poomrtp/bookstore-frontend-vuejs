@@ -3,22 +3,27 @@ import { ActionContext } from "vuex"
 import { OrderService } from '../../api'
 
 const state = {
-  orders: {}
+  orders: {},
+  order: {}
 }
 const actions = {
   async createOrder(store: ActionContext<typeof state, any>, params: string): Promise<void> {
-    console.log('createOrder-module')
     await OrderService.createOrder(params)
   },
   async checkoutOrder(store: ActionContext<typeof state, any>, params: string): Promise<void> {
-    console.log('createOrder-module')
     await OrderService.checkoutOrder(params)
   },
-
+  async fetchOrderByUser (store: ActionContext<typeof state, any>, params: string): Promise<void> {
+    const result = await OrderService.getOrderByUser()
+    store.commit('SET_ORDER', result)
+  },
 }
 const mutations = {
   SET_ORDERS(state: any, data: any): void {
     state.orders = data
+  },
+  SET_ORDER(state: any, data: any): void {
+    state.order = data
   }
 }
 

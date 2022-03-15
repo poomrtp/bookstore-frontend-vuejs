@@ -44,6 +44,14 @@
         </div>
       </div>
     </div>
+    <div class="flex p-2">
+      <div class="flex justify-start w-full">
+        <textarea placeholder="ข้อความถึงผู้ขาย" v-model="productItem.description"></textarea>
+      </div>
+      <div class="flex justify-end w-full">
+        shipment - standart
+      </div>
+    </div>
   </div>
 </template>
 
@@ -57,8 +65,15 @@ import { Options, Vue } from 'vue-class-component'
     productItem: {
       type: Object,
       default: () => null
+    },
+    messageToSeller: {
+      type: Array
     }
   },
+  emits: [
+    'onSelectQuantity',
+    'onRemoveItem'
+  ],
   computed: {
 
   },
@@ -72,7 +87,7 @@ export default class ItemCard extends Vue {
   readonly productItem!: any
 
   private maxQuantity = 10
-
+  // private messageToSeller = ''
   // async created(): Promise<void> {
   //   await this.fetchCart()
   // }

@@ -1,13 +1,13 @@
 <template>
   <div class="max-w-5xl mx-auto">
-    Your Cart
-    <div class="bg-blue-300 p-2" @click="onSubmitOrder">CHECKOUT</div>
+    <div class="text-4xl font-bolt my-2">Your Cart</div>
     <div
       v-for="order in ebookItems"
       :key="order"
-      class="w-full">
+      class="w-full mb-2">
       <item-card
         :productItem="order"
+        :messageToSeller="messageToSeller"
         @onSelectQuantity="onSelectQuantity"
         @onRemoveItem="onRemoveItem">
       </item-card>
@@ -15,12 +15,38 @@
     <div
       v-for="order in nonEbookItems"
       :key="order"
-      class="w-full">
+      class="w-full mb-2">
       <item-card
         :productItem="order"
+        :messageToSeller="messageToSeller"
         @onSelectQuantity="onSelectQuantity"
         @onRemoveItem="onRemoveItem">
       </item-card>
+    </div>
+    <div class="flex justify-end">
+      <div class="w-80 bg-gray-50 border border-gray-300 rounded-lg min-h-0 p-4 px-8">
+        <div  class="w-full flex justify-between">
+          <span class="w-3/5">Subtotal 1 ({{ ebookItems[0]?.quantity }} รายการ)</span>
+          <span class="min-w-fit">{{ ebookItems[0]?.totalPrice || '-' }} บาท</span>
+        </div>
+        <div v-for="(order, index) in nonEbookItems" :key="order" class="w-full flex justify-between my-1">
+          <span class="w-3/5">Subtotal {{ index+2 }} ({{order.quantity}} รายการ)</span>
+          <span class="min-w-fit">{{order.totalPrice}} บาท</span>
+        </div>
+        <div class="w-full flex justify-between">
+          <span class="w-3/5">รวมค่าส่ง</span>
+          <span class="min-w-fit">{{ cartClone.totalShipmentPrice || '-' }} บาท</span>
+        </div>
+        <div class="w-full flex justify-between">
+          <span class="w-3/5">รวม</span>
+          <div class="min-w-fit"><span class="text-red-500 text-2xl">{{cartClone.totalPrice}}</span><span> บาท</span></div>
+        </div>
+        <button
+          class="w-full p-2 bg-blue-400 bg-opacity-90 text-white rounded-full my-1 mt-2"
+          @click="onSubmitOrder">
+          Checkout
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -38,7 +64,6 @@ import ItemCard from './components/ItemCard.vue'
 
   },
   computed: {
-    // ...mapState('Product', ['product']),
     ...mapState('Cart', ['cart', 'finalCart']),
   },
   methods: {
@@ -64,20 +89,35 @@ export default class CartDetail extends Vue {
   private ebookItems: any = []
   private nonEbookItems: any = []
 
+  private messageToSeller:any = []
+
+  private cartClone:any = []
+
   async created(): Promise<void> {
     await this.fetchCart()
     await this.fetchFinalCart()
+    this.cartClone = this.finalCart
     this.splitEbookData()
   }
 
   splitEbookData(): void {
-    this.ebookItems = this.finalCart.orders.filter((seller: any) => seller.seller === 'e-book')
-    this.nonEbookItems = this.finalCart.orders.filter((seller: any) => seller.seller !== 'e-book')
+    this.ebookItems = this.cartClone.orders.filter((seller: any) => seller.seller === 'e-book')
+    this.nonEbookItems = this.cartClone.orders.filter((seller: any) => seller.seller !== 'e-book')
   }
 
   async onSubmitOrder(): Promise<void> {
-    await this.createOrder(this.finalCart)
+    const payload = {
+      orders: [...this.ebookItems, ...this.nonEbookItems],
+      ...this.cartClone
+    }
+    console.log('cartClone', this.cartClone)
+    console.log('onSubmitOrder', payload)
+    await this.createOrder(payload)
     this.$router.push({ name: 'checkout' })
+  }
+
+  addDescriptionToPayload(): void {
+    this.messageToSeller = []
   }
 
   async onSelectQuantity(payload: any): Promise<void> {
@@ -85,6 +125,8 @@ export default class CartDetail extends Vue {
     await this.editCart(payload)
     await this.fetchCart()
     await this.fetchFinalCart()
+    this.cartClone = this.finalCart
+    this.splitEbookData()
   }
 
   async onRemoveItem(payload: any): Promise<void> {
@@ -92,6 +134,7 @@ export default class CartDetail extends Vue {
     await this.removeItem(payload)
     await this.fetchCart()
     await this.fetchFinalCart()
+    this.cartClone = this.finalCart
     this.splitEbookData()
   }
 }

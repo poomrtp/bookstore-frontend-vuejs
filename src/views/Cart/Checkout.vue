@@ -18,8 +18,8 @@ import ItemCard from './components/ItemCard.vue'
 
   },
   computed: {
-    // ...mapState('Product', ['product']),
     ...mapState('Cart', ['cart', 'finalCart']),
+    ...mapState('Order', ['order']),
   },
   methods: {
     ...mapActions({
@@ -28,8 +28,8 @@ import ItemCard from './components/ItemCard.vue'
       fetchFinalCart: 'Cart/fetchFinalCart',
       editCart: 'Cart/editCart',
       removeItem: 'Cart/removeItem',
-      createOrder: 'Order/createOrder',
-      checkoutOrder: 'Order/checkoutOrder'
+      checkoutOrder: 'Order/checkoutOrder',
+      fetchOrderByUser: 'Order/fetchOrderByUser'
     })
     
   }
@@ -40,15 +40,17 @@ export default class CartDetail extends Vue {
   readonly finalCart!: any
   readonly editCart!: any
   readonly removeItem!: any
-  readonly createOrder!: any
   readonly checkoutOrder!: any
+  readonly fetchOrderByUser!: any
+  readonly order!: any
 
   private ebookItems: any = []
   private nonEbookItems: any = []
 
   async created(): Promise<void> {
     await this.fetchCart()
-    await this.fetchFinalCart()
+    // await this.fetchFinalCart()
+    await this.fetchOrderByUser()
     this.splitEbookData()
   }
 
@@ -58,7 +60,14 @@ export default class CartDetail extends Vue {
   }
 
   async onSubmitCheckout(): Promise<void> {
-    await this.checkoutOrder(this.finalCart)
+    try {
+      await this.checkoutOrder(this.order)
+      this.$router.push({ path: '/' })
+    } catch (error) {
+      console.log(error)
+      this.$router.push({ path: '/' })
+    }
+    // this.$router.push({ path: '/' })
   }
 
 
