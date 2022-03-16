@@ -14,24 +14,15 @@
             <button class="border border-gray-500 p-2 rounded-full">สั่งซื้อสินค้า</button>
           </router-link>
         </div>
-        <div class="relative">
-          <form action="" class="text-gray-500 focus-within:text-cyan-400 focus-within:bg-white focus-within:shadow rounded search transition duration-300">
-            <div class="relative w-full">
-              <input type="search" placeholder="Rechercher" name="search" id="search" class="text-sm text-gray-500 placeholder-gray-500 w-full rounded py-3 pr-4 pl-12 bg-gray-200 bg-opacity-75 outline-none focus:bg-transparent focus:rounded-3xl transition-all" />
-            </div>
-          </form>
-        </div>
-
         <div class="mt-4 relative overflow-y-auto overflow-x-hidden">
-          <span class="uppercase px-4 text-gray-500">Docs</span>
           <ul v-for="(item) in cart?.cartItems" :key="item" class="space-y-4 mb-12  mt-8">
             <li>
               <div>
-                <cart-item 
+                <side-cart-item 
                   :cart="item"
                   @onSelectQuantity="onSelectQuantity"
                   @onRemoveItem="onRemoveItem">
-                </cart-item>
+                </side-cart-item>
               </div>
             </li>
           </ul>
@@ -50,12 +41,12 @@
 </template>
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
-import { mapState, mapMutations, mapActions } from 'vuex'
-import CartItem from './CartItem.vue'
+import { mapState, mapActions } from 'vuex'
+import SideCartItem from './SideCartItem.vue'
 
 @Options({
   components: {
-    CartItem
+    SideCartItem
   },
   props: {
     isActive: {
@@ -71,7 +62,6 @@ import CartItem from './CartItem.vue'
   ],
   computed: {
     ...mapState('Cart', ['cart']),
-    ...mapMutations(['Cart/SET_CART']) 
   },
   methods: {
     ...mapActions({
@@ -82,7 +72,7 @@ import CartItem from './CartItem.vue'
     })
   }
 })
-export default class Detail extends Vue {
+export default class Cartbar extends Vue {
   readonly isActive!: boolean
   readonly fetchCart!: any
   readonly editCart!: any

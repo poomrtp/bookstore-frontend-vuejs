@@ -5,23 +5,46 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'home',
+    meta: {
+      layout: 'Menubar.vue',
+    },
     component: () => import('../views/Home/Home.vue')
   },
   {
     path: '/products/:name',
     name: 'products-detail',
+    meta: {
+      layout: 'Menubar.vue',
+    },
     component: () => import('../views/ProductDetail/Detail.vue'),
     props: true
   },
   {
     path: '/cart',
     name: 'cart-detail',
+    meta: {
+      layout: 'Menubar.vue',
+    },
     component: () => import('../views/Cart/Detail.vue'),
   },
   {
     path: '/checkout',
     name: 'checkout',
+    meta: {
+      layout: 'Menubar.vue',
+    },
     component: () => import('../views/Cart/Checkout.vue'),
+  },
+  {
+    path: '/account',
+    name: 'account',
+    
+    component: () => import('../views/Account/Login.vue'),
+  },
+  {
+    path: '/account/register',
+    name: 'register',
+    component: () => import('../views/Account/Register.vue'),
   },
   {
     path: '/about',

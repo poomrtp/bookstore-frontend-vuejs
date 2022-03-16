@@ -65,9 +65,6 @@ import { Options, Vue } from 'vue-class-component'
     productItem: {
       type: Object,
       default: () => null
-    },
-    messageToSeller: {
-      type: Array
     }
   },
   emits: [
@@ -87,7 +84,6 @@ export default class ItemCard extends Vue {
   readonly productItem!: any
 
   private maxQuantity = 10
-  // private messageToSeller = ''
   // async created(): Promise<void> {
   //   await this.fetchCart()
   // }

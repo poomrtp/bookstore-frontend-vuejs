@@ -156,58 +156,30 @@
       </div>
     </nav>
   </div>
-  <cart-bar 
-    :isActive="isActive"
-    @onActiveCartbar="onActiveCartbar($event)">
-  </cart-bar>
 </template>
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
-import CartBar from './CartBar.vue'
 
 @Options({
   components: {
-    CartBar
   },
   props: {
+    accountItems: {
+      type: Array,
+      default: []
+    }
   },
   emits: [
     'onActiveCartbar'
   ]
 })
-export default class HeadBar extends Vue {
+export default class Headbar extends Vue {
   private isActive = false
   private showAccountDropdown = false
-  private accountItems = [
-    {
-      title: "Your Account",
-      path: ""
-    },
-    {
-      title: "Your Order",
-      path: ""
-    },
-    {
-      title: "Your E-Book",
-      path: ""
-    },
-    {
-      title: "Redeems",
-      path: ""
-    },
-    {
-      title: "Logout",
-      path: ""
-    }
-  ]
-
-  activateAccountDropdown() : boolean {
-    return this.showAccountDropdown = !this.showAccountDropdown
-  }
 
   onActiveCartbar(status: boolean): void {
-    this.isActive = status
+    this.$emit('onActiveCartbar', status)
   }
 
 }

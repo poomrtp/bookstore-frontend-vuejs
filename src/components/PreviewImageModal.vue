@@ -11,18 +11,28 @@
       <div 
         class="relative mb-4"
         :class="isActive ? '' : 'hidden'">
-        <div class="flex justify-center h-full">
+        <div class="flex justify-between h-full">
+          <div class="z-40 text-white w-full" @click="onBlur">
+          </div>
           <img 
             :src="images[imageIndex]"
             class="w-96 h-auto cursor-pointer z-40">
+          <div class="z-40 text-white w-full" @click="onBlur">
+          </div>
         </div>
-        <div class="flex flex-wrap justify-center h-24 overflow-hidden mt-4">
+        <div class="flex justify-between h-4/6 overflow-hidden mt-4">
+          <div class="z-40 text-white w-full" @click="onBlur">
+            <!-- Prev -->
+          </div>
           <div class="m-1 " v-for="(image, index) in images" :key="image">
             <img 
               :src="image" alt=""
-              class="w-24 object-scale-down overflow-hidden cursor-pointer" 
+              class="w-80 object-scale-down overflow-hidden cursor-pointer" 
               :class="index === imageIndex ? '' : 'opacity-50'" 
               @click="onClickImage(index)">
+          </div>
+          <div class="z-40 text-white w-full" @click="onBlur">
+            <!-- Forw -->
           </div>
         </div>
       </div>

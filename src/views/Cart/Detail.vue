@@ -7,39 +7,37 @@
       class="w-full mb-2">
       <item-card
         :productItem="order"
-        :messageToSeller="messageToSeller"
         @onSelectQuantity="onSelectQuantity"
         @onRemoveItem="onRemoveItem">
       </item-card>
     </div>
     <div
-      v-for="order in nonEbookItems"
+      v-for="order in bookItems"
       :key="order"
       class="w-full mb-2">
       <item-card
         :productItem="order"
-        :messageToSeller="messageToSeller"
         @onSelectQuantity="onSelectQuantity"
         @onRemoveItem="onRemoveItem">
       </item-card>
     </div>
     <div class="flex justify-end">
       <div class="w-80 bg-gray-50 border border-gray-300 rounded-lg min-h-0 p-4 px-8">
-        <div  class="w-full flex justify-between">
+        <div v-if="ebookItems[0]" class="w-full flex justify-between">
           <span class="w-3/5">Subtotal 1 ({{ ebookItems[0]?.quantity }} รายการ)</span>
           <span class="min-w-fit">{{ ebookItems[0]?.totalPrice || '-' }} บาท</span>
         </div>
-        <div v-for="(order, index) in nonEbookItems" :key="order" class="w-full flex justify-between my-1">
-          <span class="w-3/5">Subtotal {{ index+2 }} ({{order.quantity}} รายการ)</span>
+        <div v-for="(order, index) in bookItems" :key="order" class="w-full flex justify-between my-1">
+          <span class="w-3/5">Subtotal {{ subtatalIndex(index) }} ({{order.quantity}} รายการ)</span>
           <span class="min-w-fit">{{order.totalPrice}} บาท</span>
         </div>
         <div class="w-full flex justify-between">
           <span class="w-3/5">รวมค่าส่ง</span>
-          <span class="min-w-fit">{{ cartClone.totalShipmentPrice || '-' }} บาท</span>
+          <span class="min-w-fit">{{ finalCart.totalShipmentPrice || '-' }} บาท</span>
         </div>
         <div class="w-full flex justify-between">
           <span class="w-3/5">รวม</span>
-          <div class="min-w-fit"><span class="text-red-500 text-2xl">{{cartClone.totalPrice}}</span><span> บาท</span></div>
+          <div class="min-w-fit"><span class="text-red-500 text-2xl">{{finalCart.totalPrice}}</span><span> บาท</span></div>
         </div>
         <button
           class="w-full p-2 bg-blue-400 bg-opacity-90 text-white rounded-full my-1 mt-2"
@@ -64,7 +62,7 @@ import ItemCard from './components/ItemCard.vue'
 
   },
   computed: {
-    ...mapState('Cart', ['cart', 'finalCart']),
+    ...mapState('Cart', ['cart', 'finalCart', 'ebookItems', 'bookItems']),
   },
   methods: {
     ...mapActions({
@@ -85,39 +83,29 @@ export default class CartDetail extends Vue {
   readonly editCart!: any
   readonly removeItem!: any
   readonly createOrder!: any
-
-  private ebookItems: any = []
-  private nonEbookItems: any = []
-
-  private messageToSeller:any = []
+  readonly ebookItems!: any
+  readonly bookItems!: any
 
   private cartClone:any = []
 
   async created(): Promise<void> {
     await this.fetchCart()
     await this.fetchFinalCart()
-    this.cartClone = this.finalCart
-    this.splitEbookData()
   }
 
-  splitEbookData(): void {
-    this.ebookItems = this.cartClone.orders.filter((seller: any) => seller.seller === 'e-book')
-    this.nonEbookItems = this.cartClone.orders.filter((seller: any) => seller.seller !== 'e-book')
+  subtatalIndex(index: number): number {
+    return this.ebookItems?.length === 0 ? index+1 : index+2
   }
 
   async onSubmitOrder(): Promise<void> {
+    await this.fetchFinalCart()
     const payload = {
-      orders: [...this.ebookItems, ...this.nonEbookItems],
-      ...this.cartClone
+      orders: [...this.ebookItems, ...this.bookItems],
+      ...this.finalCart
     }
-    console.log('cartClone', this.cartClone)
     console.log('onSubmitOrder', payload)
     await this.createOrder(payload)
-    this.$router.push({ name: 'checkout' })
-  }
-
-  addDescriptionToPayload(): void {
-    this.messageToSeller = []
+    this.$router.push({path: '/checkout'})
   }
 
   async onSelectQuantity(payload: any): Promise<void> {
@@ -125,8 +113,6 @@ export default class CartDetail extends Vue {
     await this.editCart(payload)
     await this.fetchCart()
     await this.fetchFinalCart()
-    this.cartClone = this.finalCart
-    this.splitEbookData()
   }
 
   async onRemoveItem(payload: any): Promise<void> {
@@ -134,8 +120,6 @@ export default class CartDetail extends Vue {
     await this.removeItem(payload)
     await this.fetchCart()
     await this.fetchFinalCart()
-    this.cartClone = this.finalCart
-    this.splitEbookData()
   }
 }
 </script>
