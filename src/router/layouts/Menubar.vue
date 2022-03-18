@@ -1,6 +1,7 @@
 
 <template>
   <navbar
+    :isAuthentication="isAuthentication"
     :accountItems="accountItems"
     @onActiveCartbar="onActiveCartbar">
   </navbar>
@@ -30,6 +31,7 @@ import SideCartMenu from './components/SideCartMenu.vue'
   },
   computed: {
     ...mapState('Cart', ['cart']),
+    ...mapState('User', ['isAuthentication']),
   },
   methods: {
     ...mapActions({

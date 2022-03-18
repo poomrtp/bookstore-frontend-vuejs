@@ -53,6 +53,10 @@ import SideCartItem from './SideCartItem.vue'
       type: Boolean,
       default: false
     },
+    isAuthentication: {
+      type: Boolean,
+      default: false
+    }
     // cart: {
 
     // }

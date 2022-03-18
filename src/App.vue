@@ -14,7 +14,8 @@
 </template>
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
-import { mapState } from 'vuex'
+import { mapState,mapActions } from 'vuex'
+import authUtil from './utils/auth.util'
 import Menubar from './router/layouts/Menubar.vue'
 
 @Options({
@@ -23,11 +24,16 @@ import Menubar from './router/layouts/Menubar.vue'
   },
   computed: {
     ...mapState('Cart', ['cart'])
+  },
+  methods: {
+    ...mapActions({
+      getUser: 'User/getUser'
+    })
   }
 })
 export default class Home extends Vue {
 
-  private isActive = false
+  readonly getUser!: any
 
   private accountItems = [
     {
@@ -48,12 +54,30 @@ export default class Home extends Vue {
     },
     {
       title: "Logout",
-      path: ""
+      path: "/logout"
     }
   ]
+  async mounted(): Promise<any> {
+    const decodeUser = authUtil.getAuthDecode()
+    console.log('decodeUser', decodeUser)
+    if (decodeUser) {
+      try {
+        const user = await this.getUser({ username: decodeUser.username })
+        console.log('user', user)
+        // if (!user) {
+        //   this.$router.push({ name: 'Login' })
+        // }
+        // this.setUser(user)
+      } catch (error) {
+        console.error('[created] decodeUser', error)
+
+      } finally {
+        // console.log('user', user)
+      }
+    }
+  }
 
   layout():any {
-    console.log(this.$route.meta.layout)
     const layout = this.$route.meta.layout || ''
     return Menubar
   }

@@ -7,7 +7,7 @@
           <div class="text-sm font-bold uppercase text-green-600 my-2 ">
             Account
           </div>
-          <div class="text-sm text-start">submenu</div>
+          <div class="text-sm text-start">{{ user.username || '-' }}</div>
         </div>
       </div>
       <div class="bg-gray-50 ">
@@ -29,7 +29,13 @@
 import { Options, Vue } from 'vue-class-component'
 
 @Options({
-  components: {}
+  components: {},
+  props: {
+    user: {
+      type: Object,
+      default: null
+    }
+  }
 })
 export default class AccountDetail extends Vue {}
 </script>

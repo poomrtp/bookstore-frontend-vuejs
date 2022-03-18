@@ -7,7 +7,7 @@
     </div>
     <div class="col-span-2 h-fit invisible md:visible">
       <div class="flex justify-end">
-        <account-detail></account-detail>
+        <account-detail :user="user"></account-detail>
       </div>
     </div>
   </div>
@@ -28,6 +28,7 @@ import AccountDetail from './components/AccountDetail.vue'
   computed: {
     ...mapState('Product', ['products']),
     ...mapState('Cart', ['cart']),
+    ...mapState('User', ['user']),
   },
   methods: {
     ...mapActions({

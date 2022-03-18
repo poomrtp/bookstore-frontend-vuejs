@@ -109,10 +109,10 @@ import PreviewImageModal from '@/components/PreviewImageModal.vue'
     }
   },
   methods: {
+    // ...mapActions({
+    //   }),
     ...mapActions({
-      fetchProductsByName: 'Product/fetchProductsByName'
-    }),
-    ...mapActions({
+      fetchProductsByName: 'Product/fetchProductsByName',
       addToCart: 'Cart/addToCart',
       fetchCart: 'Cart/fetchCart'
     })
@@ -168,6 +168,7 @@ export default class Detail extends Vue {
       type: this.typeSelected
     }
     try {
+      console.log(payload)
       await this.addToCart(payload)
       await this.fetchCart()
     } catch(error) {

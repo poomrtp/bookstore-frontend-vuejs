@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
-// import Home from '../views/Home.vue'
+import auth from '@/middleware/auth'
+import authUtil from '@/utils/auth.util'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -7,6 +8,7 @@ const routes: Array<RouteRecordRaw> = [
     name: 'home',
     meta: {
       layout: 'Menubar.vue',
+      middleware: auth,
     },
     component: () => import('../views/Home/Home.vue')
   },
@@ -15,6 +17,7 @@ const routes: Array<RouteRecordRaw> = [
     name: 'products-detail',
     meta: {
       layout: 'Menubar.vue',
+      middleware: auth,
     },
     component: () => import('../views/ProductDetail/Detail.vue'),
     props: true
@@ -24,6 +27,7 @@ const routes: Array<RouteRecordRaw> = [
     name: 'cart-detail',
     meta: {
       layout: 'Menubar.vue',
+      middleware: auth,
     },
     component: () => import('../views/Cart/Detail.vue'),
   },
@@ -32,19 +36,24 @@ const routes: Array<RouteRecordRaw> = [
     name: 'checkout',
     meta: {
       layout: 'Menubar.vue',
+      middleware: auth,
     },
     component: () => import('../views/Cart/Checkout.vue'),
   },
   {
     path: '/account',
     name: 'account',
-    
     component: () => import('../views/Account/Login.vue'),
   },
   {
     path: '/account/register',
     name: 'register',
     component: () => import('../views/Account/Register.vue'),
+  },
+  {
+    path: '/logout',
+    name: 'logout',
+    component: () => import('../views/Account/Logout.vue'),
   },
   {
     path: '/about',
@@ -56,9 +65,28 @@ const routes: Array<RouteRecordRaw> = [
   }
 ]
 
+
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
+})
+
+const publicRoute = [
+  'home',
+  'products-detail',
+  'account',
+  'register',
+  'logout'
+]
+router.beforeEach((to, from, next) => {
+  const routeName = to.name
+  if (publicRoute.some((pr) => pr === routeName)) {
+    next()
+  } else if (!authUtil.getAuth()) {
+    next({ name: 'account' })
+  } else {
+    next()
+  }
 })
 
 export default router

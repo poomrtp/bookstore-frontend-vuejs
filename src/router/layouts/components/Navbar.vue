@@ -41,7 +41,7 @@
             </div>
             <div class="flex flex-col lg:flex-row list-none">
               <div class="nav-item">
-                <div v-if="false" class="dropdown relative">
+                <div v-if="isAuthentication" class="dropdown relative">
                   <a
                     class="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-black hover:opacity-75"
                     href="#pablo">
@@ -67,8 +67,13 @@
                     </svg>
                   </a>
                   <div class="dropdown-menu absolute hidden text-black pt-2 -ml-24 w-52 z-40 border">
-                    <a v-for="(item, index) in accountItems" :key="(index)" class="bg-white hover:bg-gray-50 py-2 px-4 block whitespace-no-wrap" href="#">
-                      {{ item.title }}
+                    <a 
+                      v-for="(item, index) in accountItems" 
+                      :key="(index)"
+                      class="bg-white hover:bg-gray-50 py-2 px-4 block whitespace-no-wrap">
+                      <router-link :to="item.path">
+                        {{ item.title }}
+                      </router-link>
                     </a>
                   </div>
                 </div>
@@ -168,6 +173,10 @@ import { Options, Vue } from 'vue-class-component'
     accountItems: {
       type: Array,
       default: []
+    },
+    isAuthentication: {
+      type: Boolean,
+      default: false
     }
   },
   emits: [

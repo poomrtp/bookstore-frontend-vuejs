@@ -5,7 +5,7 @@
           Bookstore
       </div>
       <div class="border-2 border-gray-200 min-h-full bg-white max-w-xs rounded-md p-6">
-        <form>
+        <form @submit.prevent="submitLogin()">
           <div class="text-2xl font-semibold mb-6">
             LOGIN
           </div>
@@ -21,6 +21,7 @@
               </span>
             </div>
             <input
+              v-model="dataForm.username"
               type="text"
               class="px-2 py-1 h-full rounded-md text-sm text-black w-full font-normal placeholder-gray-300 flex-1 focus:outline-none"
               placeholder="Username"
@@ -40,6 +41,7 @@
               </span>
             </div>
             <input
+              v-model="dataForm.password"
               type="password"
               class="px-2 py-1 h-full rounded-md text-sm text-black w-full font-normal placeholder-gray-300 flex-1 focus:outline-none"
               placeholder="Password"
@@ -60,13 +62,40 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 import InputBox from '@/components/InputBox.vue'
+import { mapActions } from 'vuex'
 
 @Options({
   components: {
     InputBox
   },
+  methods: {
+    ...mapActions({
+      login: 'User/login',
+      getUser: 'User/getUser'
+    })
+  }
 })
-export default class Login extends Vue {}
+export default class Login extends Vue {
+  readonly login!: any
+  readonly getUser!: any
+
+  private dataForm = {
+    username: '',
+    password: ''
+  }
+
+  async submitLogin(): Promise<void> {
+    try {
+      await this.login(this.dataForm)
+      await this.getUser({ username: this.dataForm.username })
+      this.$router.push({ path: '/' })
+      
+    } catch (error) {
+      console.log(error)
+      this.$router.push({ path: '/' })
+    }
+  }
+}
 </script>
 
 <style>
