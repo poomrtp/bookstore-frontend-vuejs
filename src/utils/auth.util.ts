@@ -5,7 +5,7 @@ const storageKey = "bookstoreSecret"
 
 export const getAuth = (): any => {
   const auth = Cookies.get(storageKey)
-  console.log('auth',auth)
+  console.log('auth', auth)
   return auth
 }
 // 2 
@@ -28,11 +28,10 @@ export const clearAuth = (): any => {
 }
 
 export const getAuthToken = (): any => {
-  const token = { key: '', value: '' }
+  const token = { Authorization: '' }
 
   if (Cookies.get(storageKey)) {
-    token.key = 'Authorization'
-    token.value = `Bearer ${Cookies.get(storageKey)}`
+    token.Authorization = `Bearer ${Cookies.get(storageKey)}`
   }
 
   return token

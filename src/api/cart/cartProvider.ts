@@ -1,11 +1,12 @@
 import axios from 'axios'
+import authUtil from '@/utils/auth.util'
 const apiURL = 'http://localhost:3000/api/carts/'
 
 class CartProvider {
   fetchCart(): any {
     return axios.get(apiURL, {
       headers: {
-        Authorization: 'poom'
+        ...authUtil.getAuthToken()
       }
     }).then(res => {
       return res.data
@@ -14,7 +15,7 @@ class CartProvider {
   fetchFinalCart(): any {
     return axios.get(apiURL+ 'getfull', {
       headers: {
-        Authorization: 'poom'
+        ...authUtil.getAuthToken()
       }
     }).then(res => {
       return res.data
@@ -24,7 +25,7 @@ class CartProvider {
   addToCart(payload: any): any {
     return axios.post(apiURL + 'add-to-cart', payload, {
       headers: {
-        Authorization: 'poom'
+        ...authUtil.getAuthToken()
       }
     }).then(res => {
       return res.data
@@ -34,7 +35,7 @@ class CartProvider {
   editCart(payload: any): any {
     return axios.patch(apiURL + 'edit', payload, {
       headers: {
-        Authorization: 'poom'
+        ...authUtil.getAuthToken()
       }
     }).then(res => {
       return res.data

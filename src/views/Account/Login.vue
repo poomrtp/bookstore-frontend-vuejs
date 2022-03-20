@@ -92,7 +92,6 @@ export default class Login extends Vue {
       
     } catch (error) {
       console.log(error)
-      this.$router.push({ path: '/' })
     }
   }
 }

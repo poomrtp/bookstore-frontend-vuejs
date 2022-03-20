@@ -62,7 +62,7 @@ export default class Home extends Vue {
     console.log('decodeUser', decodeUser)
     if (decodeUser) {
       try {
-        const user = await this.getUser({ username: decodeUser.username })
+        const user = await this.getUser()
         console.log('user', user)
         // if (!user) {
         //   this.$router.push({ name: 'Login' })
