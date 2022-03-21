@@ -28,7 +28,7 @@
           <span class="min-w-fit">{{ ebookItems[0]?.totalPrice || '-' }} บาท</span>
         </div>
         <div v-for="(order, index) in bookItems" :key="order" class="w-full flex justify-between my-1">
-          <span class="w-3/5">Subtotal {{ subtatalIndex(index) }} ({{order.quantity}} รายการ)</span>
+          <span class="w-3/5">Subtotal {{ subtotalIndex(index) }} ({{order.quantity}} รายการ)</span>
           <span class="min-w-fit">{{order.totalPrice}} บาท</span>
         </div>
         <div class="w-full flex justify-between">
@@ -53,6 +53,7 @@
 import { Options, Vue } from 'vue-class-component'
 import { mapState, mapActions } from 'vuex'
 import ItemCard from './components/ItemCard.vue'
+import { CartItem, CartItemBySeller } from '@/interfaces/cart.interface'
 
 @Options({
   components: {
@@ -83,17 +84,16 @@ export default class CartDetail extends Vue {
   readonly editCart!: any
   readonly removeItem!: any
   readonly createOrder!: any
-  readonly ebookItems!: any
-  readonly bookItems!: any
-
-  private cartClone:any = []
+  readonly ebookItems!: CartItemBySeller[]
+  readonly bookItems!: CartItemBySeller[]
 
   async created(): Promise<void> {
     await this.fetchCart()
     await this.fetchFinalCart()
+    console.log(this.ebookItems,this.bookItems)
   }
 
-  subtatalIndex(index: number): number {
+  subtotalIndex(index: number): number {
     return this.ebookItems?.length === 0 ? index+1 : index+2
   }
 
@@ -108,14 +108,14 @@ export default class CartDetail extends Vue {
     this.$router.push({path: '/checkout'})
   }
 
-  async onSelectQuantity(payload: any): Promise<void> {
+  async onSelectQuantity(payload: CartItem): Promise<void> {
     console.log('onSelectQuantity', payload)
     await this.editCart(payload)
     await this.fetchCart()
     await this.fetchFinalCart()
   }
 
-  async onRemoveItem(payload: any): Promise<void> {
+  async onRemoveItem(payload: CartItem): Promise<void> {
     console.log('onRemoveItem', payload)
     await this.removeItem(payload)
     await this.fetchCart()

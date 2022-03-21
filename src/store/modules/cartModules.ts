@@ -1,6 +1,8 @@
 import { ActionContext } from "vuex"
 
 import { CartService } from '../../api'
+import { CartItem, CartItemBySeller } from "@/interfaces/cart.interface"
+import { BookInterface } from "@/interfaces/book.interface"
 
 const state = {
   cart: {},
@@ -9,26 +11,25 @@ const state = {
   bookItems: {}
 }
 const actions = {
-  async fetchCart (store: ActionContext<typeof state, any>, params: string): Promise<void> {
+  async fetchCart (store: ActionContext<typeof state, any>): Promise<void> {
     const result = await CartService.fetchCart()
     store.commit('SET_CART', result)
   },
-  async fetchFinalCart (store: ActionContext<typeof state, any>, params: string): Promise<void> {
+  async fetchFinalCart (store: ActionContext<typeof state, any>): Promise<void> {
     const result = await CartService.fetchFinalCart()
-    const ebookItems = result.orders.filter((seller: any) => seller.seller === 'e-book')
-    const bookItems = result.orders.filter((seller: any) => seller.seller !== 'e-book')
+    const ebookItems = result.orders.filter((seller: CartItemBySeller) => seller.seller === 'e-book')
+    const bookItems = result.orders.filter((seller: CartItemBySeller) => seller.seller !== 'e-book')
     store.commit('SET_FINAL_CART', result)
     store.commit('SET_BOOK_ITEMS', bookItems)
     store.commit('SET_EBOOK_ITEMS', ebookItems)
   },
-  async addToCart(store: ActionContext<typeof state, any>, params: string): Promise<void> {
+  async addToCart(store: ActionContext<typeof state, any>, params: BookInterface): Promise<void> {
     await CartService.addToCart(params)
   },
-  async editCart(store: ActionContext<typeof state, any>, params: string): Promise<void> {
+  async editCart(store: ActionContext<typeof state, any>, params: CartItem): Promise<void> {
     await CartService.editCart(params)
   },
-  async removeItem(store: ActionContext<typeof state, any>, params: string): Promise<void> {
-    console.log('removeItem-module')
+  async removeItem(store: ActionContext<typeof state, any>, params: CartItem): Promise<void> {
     await CartService.removeItem(params)
   },
   // async createOrder(store: ActionContext<typeof state, any>, params: string): Promise<void> {

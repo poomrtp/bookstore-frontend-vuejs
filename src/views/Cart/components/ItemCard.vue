@@ -57,13 +57,15 @@
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
+import { PropType } from 'vue';
+import { CartItemBySeller, CartItem } from '@/interfaces/cart.interface'
 
 @Options({
   components: { 
   },
   props: {
     productItem: {
-      type: Object,
+      type: Object as PropType<CartItemBySeller>,
       default: () => null
     }
   },
@@ -81,22 +83,18 @@ import { Options, Vue } from 'vue-class-component'
 
 export default class ItemCard extends Vue {
   readonly fetchCart!: any
-  readonly productItem!: any
 
   private maxQuantity = 10
-  // async created(): Promise<void> {
-  //   await this.fetchCart()
-  // }
-  onSelectQuantity(item: any, value: number): void {
+
+  onSelectQuantity(item: CartItem, value: number): void {
     const data = {
       ...item,
       quantity: +value
     }
-    console.log('cart-cartitem', data)
     this.$emit('onSelectQuantity', data)
   }
 
-  onRemoveItem(item: any): void {
+  onRemoveItem(item: CartItem): void {
     this.$emit('onRemoveItem', item)
   }
 

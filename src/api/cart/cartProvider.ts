@@ -1,9 +1,11 @@
 import axios from 'axios'
 import authUtil from '@/utils/auth.util'
+import { CartInterface, CartItem } from '@/interfaces/cart.interface'
+import { BookInterface } from "@/interfaces/book.interface"
 const apiURL = 'http://localhost:3000/api/carts/'
 
 class CartProvider {
-  fetchCart(): any {
+  fetchCart(): Promise<CartInterface> {
     return axios.get(apiURL, {
       headers: {
         ...authUtil.getAuthToken()
@@ -22,7 +24,7 @@ class CartProvider {
     })
   }
 
-  addToCart(payload: any): any {
+  addToCart(payload: BookInterface): Promise<CartInterface> {
     return axios.post(apiURL + 'add-to-cart', payload, {
       headers: {
         ...authUtil.getAuthToken()
@@ -32,7 +34,7 @@ class CartProvider {
     })
   }
 
-  editCart(payload: any): any {
+  editCart(payload: CartItem): Promise<CartInterface> {
     return axios.patch(apiURL + 'edit', payload, {
       headers: {
         ...authUtil.getAuthToken()
@@ -42,25 +44,25 @@ class CartProvider {
     })
   }
 
-  removeItem(payload: any): any {
+  removeItem(payload: CartItem): Promise<CartInterface> {
     return axios.patch(apiURL + 'remove', payload, {
       headers: {
-        Authorization: 'poom'
+        ...authUtil.getAuthToken()
       }
     }).then(res => {
       return res.data
     })
   }
 
-  createOrder(payload: any): any {
-    return axios.patch(apiURL + 'checkout', payload, {
-      headers: {
-        Authorization: 'poom'
-      }
-    }).then(res => {
-      return res.data
-    })
-  }
+  // createOrder(payload: any): any {
+  //   return axios.patch(apiURL + 'checkout', payload, {
+  //     headers: {
+  //       ...authUtil.getAuthToken()
+  //     }
+  //   }).then(res => {
+  //     return res.data
+  //   })
+  // }
 }
 
 export default CartProvider

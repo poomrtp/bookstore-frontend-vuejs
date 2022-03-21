@@ -43,6 +43,7 @@
 import { Options, Vue } from 'vue-class-component'
 import { mapState, mapActions } from 'vuex'
 import SideCartItem from './SideCartItem.vue'
+import { CartItem } from '@/interfaces/cart.interface'
 
 @Options({
   components: {
@@ -62,7 +63,9 @@ import SideCartItem from './SideCartItem.vue'
     // }
   },
   emits: [
-    'onActiveCartbar'
+    'onActiveCartbar',
+    'onSelectQuantity',
+    'onRemoveItem'
   ],
   computed: {
     ...mapState('Cart', ['cart']),
@@ -70,7 +73,6 @@ import SideCartItem from './SideCartItem.vue'
   methods: {
     ...mapActions({
       fetchCart: 'Cart/fetchCart',
-      addToCart: 'Cart/addToCart',
       editCart: 'Cart/editCart',
       removeItem: 'Cart/removeItem'
     })
@@ -88,16 +90,12 @@ export default class Cartbar extends Vue {
     this.$emit('onActiveCartbar', false)
   }
   
-  async onSelectQuantity(payload: any): Promise<void> {
-    console.log('onSelectQuantity', payload)
-    await this.editCart(payload)
-    await this.fetchCart()
+  async onSelectQuantity(payload: CartItem): Promise<void> {
+    this.$emit('onSelectQuantity', payload)
   }
 
-  async onRemoveItem(payload: any): Promise<void> {
-    console.log('onRemoveItem', payload)
-    await this.removeItem(payload)
-    await this.fetchCart()
+  async onRemoveItem(payload: CartItem): Promise<void> {
+    this.$emit('onRemoveItem', payload)
   }
 }
 </script>

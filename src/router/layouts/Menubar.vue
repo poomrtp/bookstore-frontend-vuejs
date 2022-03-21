@@ -1,4 +1,3 @@
-
 <template>
   <navbar
     :isAuthentication="isAuthentication"
@@ -7,6 +6,8 @@
   </navbar>
   <side-cart-menu
     :isActive="isActive"
+    @onSelectQuantity="onSelectQuantity"
+    @onRemoveItem="onRemoveItem"
     @onActiveCartbar="onActiveCartbar">
   </side-cart-menu>
 </template>
@@ -16,6 +17,7 @@ import { Options, Vue } from 'vue-class-component'
 import { mapState, mapActions } from 'vuex'
 import Navbar from './components/Navbar.vue'
 import SideCartMenu from './components/SideCartMenu.vue'
+import { CartItem } from '@/interfaces/cart.interface'
 
 @Options({
   components: {
@@ -23,7 +25,6 @@ import SideCartMenu from './components/SideCartMenu.vue'
     SideCartMenu
   },
   props: {
-    message: String,
     accountItems: {
       type: Array,
       default: []
@@ -49,7 +50,6 @@ export default class Menubar extends Vue {
   readonly editCart!: any
   readonly removeItem!: any
   readonly fetchFinalCart!: any
-  readonly message!: string
 
   private isActive = false
   private showAccountDropdown = false
@@ -62,14 +62,14 @@ export default class Menubar extends Vue {
     this.isActive = status
   }
 
-  async onSelectQuantity(payload: any): Promise<void> {
+  async onSelectQuantity(payload: CartItem): Promise<void> {
     console.log('onSelectQuantity', payload)
     await this.editCart(payload)
     await this.fetchCart()
     await this.fetchFinalCart()
   }
 
-  async onRemoveItem(payload: any): Promise<void> {
+  async onRemoveItem(payload: CartItem): Promise<void> {
     console.log('onRemoveItem', payload)
     await this.removeItem(payload)
     await this.fetchCart()
