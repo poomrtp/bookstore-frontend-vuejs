@@ -1,5 +1,4 @@
 <template>
-
   <div class="flex bg-white rounded-md w-40 lg:w-64 xl:w-10/12  mt-0 h-fit mx-3">
     <div
       v-if="isAuthentication"
