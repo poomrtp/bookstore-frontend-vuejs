@@ -87,7 +87,7 @@ export default class Login extends Vue {
   async submitLogin(): Promise<void> {
     try {
       await this.login(this.dataForm)
-      await this.getUser({ username: this.dataForm.username })
+      await this.getUser()
       this.$router.push({ path: '/' })
       
     } catch (error) {

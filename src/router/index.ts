@@ -7,7 +7,7 @@ const routes: Array<RouteRecordRaw> = [
     path: '/',
     name: 'home',
     meta: {
-      layout: 'Menubar.vue',
+      layout: 'Menubar',
       middleware: auth,
     },
     component: () => import('../views/Home/Home.vue')
@@ -16,7 +16,7 @@ const routes: Array<RouteRecordRaw> = [
     path: '/products/:name',
     name: 'products-detail',
     meta: {
-      layout: 'Menubar.vue',
+      layout: 'Menubar',
       middleware: auth,
     },
     component: () => import('../views/ProductDetail/Detail.vue'),
@@ -26,7 +26,7 @@ const routes: Array<RouteRecordRaw> = [
     path: '/cart',
     name: 'cart-detail',
     meta: {
-      layout: 'Menubar.vue',
+      layout: 'Menubar',
       middleware: auth,
     },
     component: () => import('../views/Cart/Detail.vue'),
@@ -35,7 +35,7 @@ const routes: Array<RouteRecordRaw> = [
     path: '/checkout',
     name: 'checkout',
     meta: {
-      layout: 'Menubar.vue',
+      layout: 'Menubar',
       middleware: auth,
     },
     component: () => import('../views/Cart/Checkout.vue'),

@@ -1,73 +1,72 @@
 <template>
   <div class="max-w-5xl mx-auto">
-    Payment
-    <div class="bg-blue-300 p-2" @click="onSubmitCheckout">CONFIRM</div>
+    <!-- Payment
+    <div class="bg-blue-300 p-2" @click="onSubmitCheckout">CONFIRM</div> -->
+    <div class="grid grid-cols-8 justify-between mx-4">
+      <div class="col-span-5">
+        <account-detail :user="user" class="mb-4"></account-detail>
+        <checkout-item-list :orderCheckout="order"></checkout-item-list>
+      </div>
+      <div class="col-span-3 h-fit invisible md:visible">
+        <div class="flex justify-end">
+          <payment-confirm :order="order" @onSubmitCheckout="onSubmitCheckout"></payment-confirm>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 import { mapState, mapActions } from 'vuex'
-import ItemCard from './components/ItemCard.vue'
+import PaymentConfirm from './components/PaymentConfirm.vue'
+import CheckoutItemList from './components/CheckoutItemList.vue'
+import AccountDetail from './components/AccountDetail.vue'
+// import { CartInterface, CartItem, CartItemBySeller, FinalCartInterface } from "@/interfaces/cart.interface"
+import { OrderInterface } from '@/interfaces/order.interface'
 
 @Options({
   components: {
-    ItemCard
+    AccountDetail,
+    CheckoutItemList,
+    PaymentConfirm
   },
   props: {
 
   },
   computed: {
-    ...mapState('Cart', ['cart', 'finalCart']),
+    ...mapState('Cart', ['cart']),
     ...mapState('Order', ['order']),
+    ...mapState('User', ['user']),
   },
   methods: {
     ...mapActions({
-      addToCart: 'Cart/addToCart',
       fetchCart: 'Cart/fetchCart',
-      fetchFinalCart: 'Cart/fetchFinalCart',
-      editCart: 'Cart/editCart',
-      removeItem: 'Cart/removeItem',
       checkoutOrder: 'Order/checkoutOrder',
       fetchOrderByUser: 'Order/fetchOrderByUser'
     })
-    
   }
 })
 export default class CartDetail extends Vue {
   readonly fetchCart!: any
-  readonly fetchFinalCart!: any
-  readonly finalCart!: any
-  readonly editCart!: any
-  readonly removeItem!: any
   readonly checkoutOrder!: any
   readonly fetchOrderByUser!: any
-  readonly order!: any
+  readonly order!: OrderInterface
 
-  private ebookItems: any = []
-  private nonEbookItems: any = []
 
   async created(): Promise<void> {
     await this.fetchCart()
-    // await this.fetchFinalCart()
     await this.fetchOrderByUser()
-    this.splitEbookData()
-  }
-
-  splitEbookData(): void {
-    this.ebookItems = this.finalCart.orders.filter((seller: any) => seller.seller === 'e-book')
-    this.nonEbookItems = this.finalCart.orders.filter((seller: any) => seller.seller !== 'e-book')
   }
 
   async onSubmitCheckout(): Promise<void> {
     try {
-      await this.checkoutOrder(this.order)
-      this.$router.push({ path: '/' })
+      // await this.checkoutOrder(this.order)
+      // this.$router.push({ path: '/' })
+      console.log('checkout success')
     } catch (error) {
       console.log(error)
-      this.$router.push({ path: '/' })
     }
-    // this.$router.push({ path: '/' })
   }
 
 

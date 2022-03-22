@@ -1,7 +1,7 @@
 import { ActionContext } from "vuex"
 
 import { CartService } from '../../api'
-import { CartItem, CartItemBySeller } from "@/interfaces/cart.interface"
+import { CartInterface, CartItem, CartItemBySeller, FinalCartInterface } from "@/interfaces/cart.interface"
 import { BookInterface } from "@/interfaces/book.interface"
 
 const state = {
@@ -39,16 +39,16 @@ const actions = {
 
 }
 const mutations = {
-  SET_CART(state: any, data: any): void {
+  SET_CART(state: any, data: CartInterface): void {
     state.cart = data
   },
-  SET_FINAL_CART(state: any, data: any): void {
+  SET_FINAL_CART(state: any, data: FinalCartInterface): void {
     state.finalCart = data
   },
-  SET_BOOK_ITEMS(state: any, data: any): void {
+  SET_BOOK_ITEMS(state: any, data: CartItemBySeller): void {
     state.bookItems = data
   },
-  SET_EBOOK_ITEMS(state: any, data: any): void {
+  SET_EBOOK_ITEMS(state: any, data: CartItemBySeller): void {
     state.ebookItems = data
   },
 }

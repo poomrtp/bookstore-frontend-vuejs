@@ -50,16 +50,18 @@
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
+import { PropType } from 'vue';
+import { BookInterface, Type } from '@/interfaces/book.interface'
 
 @Options({
   components: {},
   props: {
     product: {
-      type: Object,
+      type: Object as PropType<BookInterface>,
       default: () => null
     },
     typeSelected: {
-      type: Object,
+      type: Object as PropType<Type>,
       default: () => null
     }
   },
@@ -79,41 +81,14 @@ export default class PriceDetail extends Vue {
   readonly typeSelected!: string
 
   private quantitySelected = 1
-  private productTypeSelected = this.product.digitalPrice ? 'e-book' : 'book'
   private maxQuantity = 10
   private quantitySelect = 0
-  private showQuantityList = false
-  // private productTypes = [
-  //   {
-  //     typeTH: 'หนังสือเล่ม',
-  //     type: 'book'
-  //   },
-  //   {
-  //     typeTH: 'อีบุ๊ค',
-  //     type: 'e-book'
-  //   }
-  // ]
-  // private productTypeText = [
-  //   {
-  //     book: 'หนังสือเล่ม',
-  //     type: 'book',
-  //     eBook: 'อีบุ๊ค'
-  //   }
-  // ]
-
-  // created(): void {
-
-  // }
-
-  activateQuantityList(status: boolean) : boolean {
-    return this.showQuantityList = status
-  }
 
   onSelectQuantity(value: number): void {
     this.$emit('onSelectQuantity', +value)
   }
 
-  onSelectProductType(productType: any): void {
+  onSelectProductType(productType: Type): void {
     this.$emit('onSelectProductType', productType)
   }
 
@@ -121,10 +96,6 @@ export default class PriceDetail extends Vue {
     return productType === this.typeSelected ? 'bg-white text-black border-2 border-blue-500 focus: bg-white hover:border hover:border-border-blue-500' : 
     'bg-gray-100 text-gray-500 border border-gray-500 hover:border hover:border-blue-500 hover:text-black'
   }
-
-  // isBook(): boolean {
-  //     return 'book' === this.typeSelected
-  // }
 
 }
 </script>

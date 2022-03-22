@@ -7,7 +7,7 @@
     </div>
     <div class="col-span-2 h-fit invisible md:visible">
       <div class="flex justify-end">
-        <account-detail :user="user"></account-detail>
+        <account-detail :user="user" :isAuthentication="isAuthentication"></account-detail>
       </div>
     </div>
   </div>
@@ -18,6 +18,7 @@ import { Options, Vue } from 'vue-class-component'
 import { mapState, mapActions } from 'vuex'
 import ProductList from './components/ProductList.vue'
 import AccountDetail from './components/AccountDetail.vue'
+import { BookInterface } from "@/interfaces/book.interface"
 
 @Options({
   components: {
@@ -28,7 +29,7 @@ import AccountDetail from './components/AccountDetail.vue'
   computed: {
     ...mapState('Product', ['products']),
     ...mapState('Cart', ['cart']),
-    ...mapState('User', ['user']),
+    ...mapState('User', ['user','isAuthentication']),
   },
   methods: {
     ...mapActions({
@@ -39,8 +40,8 @@ import AccountDetail from './components/AccountDetail.vue'
 })
 export default class Home extends Vue {
   readonly fetchProducts!: any
-  readonly products!: any
   readonly fetchCart!: any
+  readonly products!: BookInterface[]
 
   async created(): Promise<void> {
     await this.fetchProducts()
@@ -52,7 +53,6 @@ export default class Home extends Vue {
     const params = {
       name
     }
-    console.log('onClickDetail', name)
     this.$router.push({
       name: 'products-detail',
       params

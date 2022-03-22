@@ -17,13 +17,15 @@ import { Options, Vue } from 'vue-class-component'
 import { mapState,mapActions } from 'vuex'
 import authUtil from './utils/auth.util'
 import Menubar from './router/layouts/Menubar.vue'
+import { AccountInterface } from '@/interfaces/account.interface'
 
 @Options({
   components: {
     
   },
   computed: {
-    ...mapState('Cart', ['cart'])
+    ...mapState('Cart', ['cart']),
+    ...mapState('User', ['user'])
   },
   methods: {
     ...mapActions({
@@ -34,6 +36,7 @@ import Menubar from './router/layouts/Menubar.vue'
 export default class Home extends Vue {
 
   readonly getUser!: any
+  readonly user!: AccountInterface
 
   private accountItems = [
     {
@@ -57,29 +60,23 @@ export default class Home extends Vue {
       path: "/logout"
     }
   ]
-  async mounted(): Promise<any> {
+  async mounted(): Promise<void> {
     const decodeUser = authUtil.getAuthDecode()
     console.log('decodeUser', decodeUser)
     if (decodeUser) {
       try {
-        const user = await this.getUser()
-        console.log('user', user)
-        // if (!user) {
-        //   this.$router.push({ name: 'Login' })
-        // }
-        // this.setUser(user)
+        await this.getUser()
+        console.log('user', this.user)
       } catch (error) {
         console.error('[created] decodeUser', error)
 
-      } finally {
-        // console.log('user', user)
       }
     }
   }
 
   layout():any {
     const layout = this.$route.meta.layout || ''
-    return Menubar
+    return layout ? Menubar : ''
   }
 
 }

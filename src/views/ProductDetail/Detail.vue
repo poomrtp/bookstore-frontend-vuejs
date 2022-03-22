@@ -80,6 +80,7 @@ import DetailHeader from './components/DetailHeader.vue'
 import ImagePreview from './components/ImagePreview.vue'
 import PriceDetail from './components/PriceDetail.vue'
 import PreviewImageModal from '@/components/PreviewImageModal.vue'
+import { Type, BookInterface } from '@/interfaces/book.interface'
 
 @Options({
   components: {
@@ -109,31 +110,28 @@ import PreviewImageModal from '@/components/PreviewImageModal.vue'
     }
   },
   methods: {
-    // ...mapActions({
-    //   }),
     ...mapActions({
       fetchProductsByName: 'Product/fetchProductsByName',
       addToCart: 'Cart/addToCart',
       fetchCart: 'Cart/fetchCart'
     })
-    
   }
 })
 export default class Detail extends Vue {
   readonly fetchProductsByName!: any
   readonly fetchCart!: any
   readonly addToCart!: any
-  readonly product!: any
-  readonly name!: any
+  readonly product!: BookInterface
+  readonly name!: string
   private isActivePreviewImageModal = false
-  private typeSelected = null
+  private typeSelected = {}
   private quantitySelected = 1 
 
   async created(): Promise<void> {
     console.log(this.name)
     await this.fetchProductsByName(this.name)
     await this.fetchCart()
-    this.typeSelected = this.product?.types[0] || null
+    this.typeSelected = this.product?.types[0] || {}
     console.log('this.typeSelected', this.typeSelected)
     console.log('this.product', this.product)
   }
@@ -142,7 +140,7 @@ export default class Detail extends Vue {
     this.isActivePreviewImageModal = true
   }
 
-  onSelectProductType(type: any): void {
+  onSelectProductType(type: Type): void {
     this.typeSelected = type
   }
 
@@ -175,10 +173,6 @@ export default class Detail extends Vue {
       console.log(error)
     }
   }
-
-  // async fetchCart(): Promise<void> {
-  //   await this.fetchCart()
-  // }
 }
 </script>
 

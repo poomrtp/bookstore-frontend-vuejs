@@ -34,7 +34,6 @@
 import { Options, Vue } from 'vue-class-component'
 import ProductCard from '../../../components/ProductCard.vue'
 
-
 @Options({
   components: {
     ProductCard
@@ -50,7 +49,7 @@ import ProductCard from '../../../components/ProductCard.vue'
   ]
 })
 export default class ProductList extends Vue {
-  private tabItems: Array<any> = [
+  private tabItems = [
     {
       name: 'New items',
       path: ''
@@ -77,42 +76,6 @@ export default class ProductList extends Vue {
   }
 
 }
-// import { defineComponent } from 'vue'
-
-// export default defineComponent({
-//   components: {
-//     ProductCard
-//   },
-//   props: {
-//     products: {
-//       type: Array,
-//       default: () => []
-//     }
-//   },
-//   data() {
-//     return {
-//       tabItems: [
-//         {
-//           name: 'New items',
-//           path: ''
-//         },
-//         {
-//           name: 'Books',
-//           path: ''
-//         }
-//       ],
-//       tabSelect: 0
-//     }
-//   },
-//   methods: {
-//     tabActive(index: number) : string {
-//       return index === this.tabSelect ? 'bg-white border-t border-l border-r border-gray focus: bg-white focus: transition duration-150 ease-in-out' : 'bg-gray-100 border-t border-l border-r border-b border-gray '
-//     },
-//     tabOption(index : number) : number {
-//       return this.tabSelect = index
-//     }
-//   }
-// })
 </script>
 
 <style></style>

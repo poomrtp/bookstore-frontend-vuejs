@@ -116,11 +116,7 @@ import { mapActions } from 'vuex'
 })
 export default class Register extends Vue {
   readonly createAccount!:any
-  private fullname = ''
-  private username = ''
-  private password = ''
   private confirmPassword = ''
-  private email = ''
   private dataForm = {
     fullname: '',
     username: '',
@@ -135,10 +131,7 @@ export default class Register extends Vue {
     }
   }
   validate(): boolean {
-    if(this.dataForm.fullname === '') return false
-    if(this.dataForm.username === '') return false
-    if(this.dataForm.password === '') return false
-    if(this.dataForm.email === '') return false
+    if(this.dataForm.password !== this.confirmPassword) return false
     return true
   }
 }

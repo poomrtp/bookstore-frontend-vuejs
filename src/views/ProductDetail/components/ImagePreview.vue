@@ -42,7 +42,7 @@ import PreviewImageModal from '@/components/PreviewImageModal.vue'
   ]
 })
 export default class PreviewImage extends Vue {
-  readonly images!: Array<any>
+  readonly images!: Array<string>
   private isActive = false
   private imageIndex = 0
 

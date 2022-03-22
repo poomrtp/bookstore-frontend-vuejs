@@ -1,10 +1,11 @@
 import axios from 'axios'
 import authUtil from '@/utils/auth.util'
-import { CartInterface, CartItem } from '@/interfaces/cart.interface'
+import { CartInterface, CartItem, FinalCartInterface } from '@/interfaces/cart.interface'
 import { BookInterface } from "@/interfaces/book.interface"
 const apiURL = 'http://localhost:3000/api/carts/'
 
 class CartProvider {
+
   fetchCart(): Promise<CartInterface> {
     return axios.get(apiURL, {
       headers: {
@@ -14,7 +15,8 @@ class CartProvider {
       return res.data
     })
   }
-  fetchFinalCart(): any {
+
+  fetchFinalCart(): Promise<FinalCartInterface> {
     return axios.get(apiURL+ 'getfull', {
       headers: {
         ...authUtil.getAuthToken()

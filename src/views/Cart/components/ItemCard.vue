@@ -15,7 +15,7 @@
         <div class="flex-none justify-start items-center w-fit max-w-fit overflow-hidden">
           <img :src="item?.images[0]" alt="" class="flex items-start h-32 w-auto">
         </div>
-        <div class="w-full flex items-start">
+        <div class="w-full flex items-start ml-4">
           {{ item.name }}
         </div>
         <div class="flex items-center w-1/6">
