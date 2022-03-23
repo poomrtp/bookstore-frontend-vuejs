@@ -81,6 +81,7 @@ import ImagePreview from './components/ImagePreview.vue'
 import PriceDetail from './components/PriceDetail.vue'
 import PreviewImageModal from '@/components/PreviewImageModal.vue'
 import { Type, BookInterface } from '@/interfaces/book.interface'
+import { CartInterface } from '@/interfaces/cart.interface'
 
 @Options({
   components: {
@@ -113,25 +114,33 @@ import { Type, BookInterface } from '@/interfaces/book.interface'
     ...mapActions({
       fetchProductsByName: 'Product/fetchProductsByName',
       addToCart: 'Cart/addToCart',
-      fetchCart: 'Cart/fetchCart'
+      fetchCart: 'Cart/fetchCart',
+      fetchFinalCart: 'Cart/fetchFinalCart'
     })
   }
 })
 export default class Detail extends Vue {
   readonly fetchProductsByName!: any
   readonly fetchCart!: any
+  readonly fetchFinalCart!: any
   readonly addToCart!: any
   readonly product!: BookInterface
   readonly name!: string
+  readonly cart!: CartInterface
   private isActivePreviewImageModal = false
-  private typeSelected = {}
+  private typeSelected: Type = {
+    name: '',
+    nameTH: '',
+    price: 0,
+    _id: ''
+  }
   private quantitySelected = 1 
 
   async created(): Promise<void> {
     console.log(this.name)
     await this.fetchProductsByName(this.name)
     await this.fetchCart()
-    this.typeSelected = this.product?.types[0] || {}
+    this.typeSelected = this.product?.types[0]
     console.log('this.typeSelected', this.typeSelected)
     console.log('this.product', this.product)
   }
@@ -148,7 +157,22 @@ export default class Detail extends Vue {
     this.quantitySelected = value
   }
 
+  findProductByName(): number {
+    console.log('this.typeSelected.name', this.typeSelected.name)
+    const result = this.cart.cartItems.findIndex(item => {
+      return item.name + '-' + item.type.name === this.product.name + '-' + this.typeSelected.name
+    })
+    return result
+  }
+
   async addProductToCart(): Promise<void> {
+    if (this.typeSelected.name === 'e-book') {
+      this.quantitySelected = 1
+      if (this.findProductByName() !== -1 ) {
+        return
+      }
+    }
+    
     const payload = {
       id: this.product.id,
       name: this.product.name,
@@ -169,6 +193,7 @@ export default class Detail extends Vue {
       console.log(payload)
       await this.addToCart(payload)
       await this.fetchCart()
+      await this.fetchFinalCart()
     } catch(error) {
       console.log(error)
     }

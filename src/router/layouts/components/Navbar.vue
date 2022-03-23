@@ -15,7 +15,7 @@
           </div>
           <div class="flex flex-grow justify-end items-center">
             <div
-              class="relative flex sm:w-5/12 md:w-4/12 p-1 flex-wrap items-stretch  h-10 
+              class="flex sm:w-5/12 md:w-5/12 p-1 flex-wrap items-stretch  h-10 hover:w-12/12 ease-in-out
               bg-white border border-gray-200 rounded-md focus-within:border-blue-300 mr-6">
               <div class="flex">
                 <span

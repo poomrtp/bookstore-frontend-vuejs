@@ -12,7 +12,8 @@ const state = {
 }
 const actions = {
   async fetchCart (store: ActionContext<typeof state, any>): Promise<void> {
-    const result = await CartService.fetchCart()
+    const result = await CartService.fetchCart() || {}
+    console.log('cart', result)
     store.commit('SET_CART', result)
   },
   async fetchFinalCart (store: ActionContext<typeof state, any>): Promise<void> {

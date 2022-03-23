@@ -2,7 +2,7 @@
   <navbar
     :isAuthentication="isAuthentication"
     :accountItems="accountItems"
-    :cartQuantity="cart.totalItem"
+    :cartQuantity="cart?.totalItem"
     @onSearch="onSearch"
     @onActiveCartbar="onActiveCartbar">
   </navbar>
@@ -34,8 +34,11 @@ import { CartItem } from '@/interfaces/cart.interface'
   },
   computed: {
     ...mapState('Product', ['products']),
-    ...mapState('Cart', ['cart']),
+    ...mapState('Cart', ['cart', 'finalCart']),
     ...mapState('User', ['isAuthentication']),
+    setCartItemQuantity() {
+      return this.cart.totalItems || 0
+    }
   },
   methods: {
     ...mapActions({

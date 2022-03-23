@@ -7,7 +7,7 @@
         <account-detail :user="user" class="mb-4"></account-detail>
         <checkout-item-list :orderCheckout="order"></checkout-item-list>
       </div>
-      <div class="col-span-3 h-fit invisible md:visible">
+      <div class="col-span-3 h-fit">
         <div class="flex justify-end">
           <payment-confirm :order="order" @onSubmitCheckout="onSubmitCheckout"></payment-confirm>
         </div>
@@ -61,8 +61,8 @@ export default class CartDetail extends Vue {
 
   async onSubmitCheckout(): Promise<void> {
     try {
-      // await this.checkoutOrder(this.order)
-      // this.$router.push({ path: '/' })
+      await this.checkoutOrder(this.order)
+      this.$router.push({ path: '/' })
       console.log('checkout success')
     } catch (error) {
       console.log(error)

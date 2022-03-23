@@ -62,7 +62,7 @@ import { BookInterface, Type } from '@/interfaces/book.interface'
     },
     typeSelected: {
       type: Object as PropType<Type>,
-      default: () => null
+      default: {}
     }
   },
   emits: [
@@ -72,13 +72,14 @@ import { BookInterface, Type } from '@/interfaces/book.interface'
   computed: {
     isBook(): boolean {
       this.quantitySelected = 1
-      return 'book' === this.typeSelected
+      console.log('isBook', this.typeSelected)
+      return this.typeSelected?.name || true
   }
   }
 })
 export default class PriceDetail extends Vue {
   readonly product!: any
-  readonly typeSelected!: string
+  readonly typeSelected!: Type
 
   private quantitySelected = 1
   private maxQuantity = 10
@@ -89,11 +90,12 @@ export default class PriceDetail extends Vue {
   }
 
   onSelectProductType(productType: Type): void {
+    console.log(productType)
     this.$emit('onSelectProductType', productType)
   }
 
-  productTypeActive(productType: string): string {
-    return productType === this.typeSelected ? 'bg-white text-black border-2 border-blue-500 focus: bg-white hover:border hover:border-border-blue-500' : 
+  productTypeActive(productType: Type): string {
+    return productType.name === this.typeSelected.name ? 'bg-white text-black border-2 border-blue-500 focus: bg-white hover:border hover:border-border-blue-500' : 
     'bg-gray-100 text-gray-500 border border-gray-500 hover:border hover:border-blue-500 hover:text-black'
   }
 
