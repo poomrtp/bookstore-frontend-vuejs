@@ -1,5 +1,5 @@
 <template>
-  <div class="relative slide h-96">
+  <div class="relative slide h-24 mx-3 mb-4 sm:h-28 md:h-56 lg:h-80">
     <div class="carousel-inner relative overflow-hidden w-full">
       <div v-for="(img, i) in images" :id="`slide-${i}`" :key="i" 
         :class="`${active === i ? 'active' : 'left-full'}`"

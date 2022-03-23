@@ -1,11 +1,10 @@
 <template>
   <div>
-    <nav class="relative flex flex-wrap items-center justify-between px-0 py-3 mb-3">
+    <nav class="relative flex flex-wrap items-center justify-between px-0 py-3">
       <div class="flex justify-center w-full">
-        <div class="container lg:max-w-7xl mx-auto flex flex-wrap items-center justify-between my-3">
+        <div class="container lg:max-w-7xl mx-auto flex items-center justify-between my-3">
           <div
-            class="w-full relative flex justify-between lg:w-auto px-4 lg:static lg:block lg:justify-start"
-          >
+            class="relative flex justify-between lg:w-auto px-4 lg:static lg:block lg:justify-start">
             <router-link to="/">
               <a
                 class="text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase text-black"
@@ -14,11 +13,10 @@
               </a>
             </router-link>
           </div>
-          <div class="lg:flex flex-grow items-center" id="example-navbar-warning">
+          <div class="flex flex-grow justify-end items-center">
             <div
-              class="relative flex  sm:w-5/12 md:w-4/12 p-1 flex-wrap items-stretch lg:ml-auto h-10 
-              bg-white border border-gray-200 rounded-md focus-within:border-blue-300 mr-6"
-            >
+              class="relative flex sm:w-5/12 md:w-4/12 p-1 flex-wrap items-stretch  h-10 
+              bg-white border border-gray-200 rounded-md focus-within:border-blue-300 mr-6">
               <div class="flex">
                 <span
                   class="font-normal flex text-center rounded-md text-sm bg-white items-center pl-2 text-gray-400">
@@ -35,11 +33,13 @@
                 </span>
               </div>
               <input
+                v-model="searchValue"
                 type="text"
                 class="px-2 py-1 h-full rounded-md text-sm text-black w-full font-normal placeholder-gray-300 flex-1 focus:outline-none"
-                placeholder="Search"/>
+                placeholder="Search"
+                @keydown.enter="onSearch()"/>
             </div>
-            <div class="flex flex-col lg:flex-row list-none">
+            <div class="flex flex-row list-none">
               <div class="nav-item">
                 <div v-if="isAuthentication" class="dropdown relative">
                   <a
@@ -86,20 +86,19 @@
                   </router-link>
                 </div>
               </div>
-              <div class="nav-item" @click="onActiveCartbar(true)">
+              <div class="nav-item w-24" @click="onActiveCartbar(true)">
                 <a
-                  class="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-black hover:opacity-75"
-                >
+                  class="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-black hover:opacity-75">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     class="h-6 w-6"
                     viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
+                    fill="currentColor">
                     <path
                       d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"
                     />
                   </svg>
+                  <span class="px-2 bg-yellow-500 rounded text-white">{{ cartQuantity }}</span>
                 </a>
               </div>
             </div>
@@ -109,14 +108,13 @@
       <!-- minor menu -->
       <div class="flex justify-center w-full border-t border-b border-gray mt-3">
         <div class="container lg:max-w-7xl flex flex-wrap items-center justify-between">
-          <div class="lg:flex flex-grow items-center">
-            <ul class="flex flex-col lg:flex-row list-none mr-auto">
+          <div class="flex flex-grow items-center justify-between">
+            <ul class="flex flex-row list-none justify-center md:justify-start">
               <li class="nav-item">
                 <router-link to="/">
                   <a
                     class="px-4 py-2 flex items-center text-md uppercase leading-snug text-black hover:opacity-75"
-                    href="#pablo"
-                  >
+                    href="#pablo">
                     <span>shop</span>
                   </a>
                 </router-link>
@@ -124,13 +122,12 @@
               <li class="nav-item">
                 <a
                   class="px-3 py-2 flex items-center text-md uppercase leading-snug text-black hover:opacity-75"
-                  href="#pablo"
-                >
+                  href="#pablo">
                   <span class="ml-2">event</span>
                 </a>
               </li>
             </ul>
-            <ul class="flex flex-col lg:flex-row list-none ml-auto">
+            <ul class="flex flex-row list-none invisible md:visible">
               <li class="nav-item">
                 <a
                   class="px-4 py-2 flex items-center text-md uppercase leading-snug text-black hover:opacity-75"
@@ -177,18 +174,28 @@ import { Options, Vue } from 'vue-class-component'
     isAuthentication: {
       type: Boolean,
       default: false
+    },
+    cartQuantity: {
+      type: Number,
+      default: 0
     }
   },
   emits: [
-    'onActiveCartbar'
+    'onActiveCartbar',
+    'onSearch'
   ]
 })
 export default class Headbar extends Vue {
   private isActive = false
   private showAccountDropdown = false
+  private searchValue = ''
 
   onActiveCartbar(status: boolean): void {
     this.$emit('onActiveCartbar', status)
+  }
+
+  onSearch(): void {
+    this.$emit('onSearch', this.searchValue)
   }
 
 }

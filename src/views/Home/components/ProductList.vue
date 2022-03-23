@@ -1,7 +1,7 @@
 <template>
   <div class="mx-3">
     <div
-      class="nav nav-tabs flex flex-col md:flex-row flex-wrap list-none border-b border-gray"
+      class="nav nav-tabs w-full flex flex-row md:flex-row flex-wrap list-none border-b border-gray"
       id="tabs-tab"
       role="tablist"
     >
@@ -23,7 +23,7 @@
       </div>
     </div>
   </div>
-  <div class="mt-6 grid grid-cols-1 gap-y-10 gap-x-2 sm:grid-cols-2 lg:grid-cols-5 xl:gap-x-4 mx-3">
+  <div class="mt-6 px-3 grid grid-cols-2 gap-y-10 lg:gap-x-2 w-full sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5 xl:gap-x-4">
     <div v-for="product in products" :key="product">
       <product-card :product="product" @click="onClickDetail(product.name)"></product-card>
     </div>

@@ -8,14 +8,14 @@
         overflow-y-auto
         "
       :class="isActive ? 'right-0 duration-300 ease-out' : '-right-96 duration-300 ease-out'">
-      <nav v-if="cart?.cartItems" class="py-2">
+      <nav v-if="cart.cartItems?.length > 0" class="py-2">
         <div class="flex justify-center gap-4 pb-4 w-full">
           <router-link to="/cart">
             <button class="border border-gray-500 p-2 rounded-full">สั่งซื้อสินค้า</button>
           </router-link>
         </div>
         <div class="mt-4 relative overflow-y-auto overflow-x-hidden">
-          <ul v-for="(item) in cart?.cartItems" :key="item" class="space-y-4 mb-12  mt-8">
+          <ul v-for="(item) in cart?.cartItems" :key="item" class="">
             <li>
               <div>
                 <side-cart-item 
@@ -28,8 +28,10 @@
           </ul>
         </div>
       </nav>
-      <div v-else>
-        ไม่มีข้อมูล
+      <div v-else class="flex justify-center">
+        <span class="mt-12">
+          ไม่มีข้อมูล
+        </span>
       </div>
     </div>
     <div

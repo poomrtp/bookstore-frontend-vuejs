@@ -3,12 +3,12 @@
     <carousel-image :images="imagesCarousel"></carousel-image>
   </div>
   <div class="grid grid-cols-7">
-    <div class="col-span-5">
+    <div class="col-span-7 lg:col-span-5">
       <div class="grid grid-cols-1">
         <product-list :products="products" @clickDetail="onClickDetail($event)"></product-list>
       </div>
     </div>
-    <div class="col-span-2 h-fit invisible md:visible">
+    <div class="col-span-2 h-fit invisible lg:visible">
       <div class="flex justify-end">
         <account-detail :user="user" :isAuthentication="isAuthentication"></account-detail>
       </div>
@@ -30,7 +30,11 @@ import { BookInterface } from "@/interfaces/book.interface"
     ProductList,
     AccountDetail
   },
-  
+  // data() {
+  //   return {
+  //     search: this.$route.query.search || ''
+  //   }
+  // },
   computed: {
     ...mapState('Product', ['products']),
     ...mapState('Cart', ['cart']),
@@ -58,9 +62,13 @@ export default class Home extends Vue {
   ]
 
   async created(): Promise<void> {
-    await this.fetchProducts()
+    const search = this.$route.query.search || ''
+    await this.fetchProducts(search)
     await this.fetchCart()
-    console.log('this.products', this.products)
+  }
+
+  fetchData(): void {
+    console.log('this.$route.query.search')
   }
 
   onClickDetail (name: string): void {

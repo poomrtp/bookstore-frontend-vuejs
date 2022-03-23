@@ -1,5 +1,5 @@
 <template>
-  <div class="flex bg-white rounded-md w-40 lg:w-64 xl:w-10/12  mt-0 h-fit mx-3">
+  <div class="flex bg-white border rounded-md w-full md:w-10/12  mt-0 h-fit mx-3">
     <div
       v-if="isAuthentication"
       class="flex flex-col w-full">
@@ -9,10 +9,10 @@
         </div>
         <div class="text-2xl text-black text-start">{{ user.fullname || '-' }}</div>
       </div>
-      <div class="bg-gray-50 px-2">
-        <div class="text-gray-600 text-start">แจ้งชำระเงิน</div>
-        <div class="text-gray-600 text-start">รายการสั่งซื้อสินค้าของฉัน</div>
-        <div class="text-gray-600 text-start">คำถามที่พบบ่อย</div>
+      <div class="bg-gray-50 px-4">
+        <div class="text-gray-600 text-start py-1">แจ้งชำระเงิน</div>
+        <div class="text-gray-600 text-start py-1">รายการสั่งซื้อสินค้าของฉัน</div>
+        <div class="text-gray-600 text-start py-1">คำถามที่พบบ่อย</div>
       </div>
     </div>
     <div
@@ -23,8 +23,8 @@
           <button class="px-4 py-2 bg-blue-600 text-white rounded">Login or Register</button>
         </router-link>
       </div>
-      <div class="bg-gray-50 px-2">
-        <div class="text-gray-600 text-start">คำถามที่พบบ่อย</div>
+      <div class="bg-gray-50 px-4">
+        <div class="text-gray-600 text-start py-1">คำถามที่พบบ่อย</div>
       </div>
     </div>
   </div>

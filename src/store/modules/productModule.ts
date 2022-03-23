@@ -9,8 +9,8 @@ const state = {
   product: {}
 }
 const actions = {
-  async fetchProducts ( store: ActionContext<typeof state, any>): Promise<void> {
-    const result = await ProductService.fetchProducts()
+  async fetchProducts ( store: ActionContext<typeof state, any>, query: string): Promise<void> {
+    const result = await ProductService.fetchProducts(query)
     store.commit('SET_PRODUCTS', result)
   },
   async fetchProductsByName(store: ActionContext<typeof state, any>, params: string): Promise<void> {

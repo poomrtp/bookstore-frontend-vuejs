@@ -2,6 +2,8 @@
   <navbar
     :isAuthentication="isAuthentication"
     :accountItems="accountItems"
+    :cartQuantity="cart.totalItem"
+    @onSearch="onSearch"
     @onActiveCartbar="onActiveCartbar">
   </navbar>
   <side-cart-menu
@@ -31,11 +33,13 @@ import { CartItem } from '@/interfaces/cart.interface'
     }
   },
   computed: {
+    ...mapState('Product', ['products']),
     ...mapState('Cart', ['cart']),
     ...mapState('User', ['isAuthentication']),
   },
   methods: {
     ...mapActions({
+      fetchProducts: 'Product/fetchProducts',
       fetchCart: 'Cart/fetchCart',
       addToCart: 'Cart/addToCart',
       editCart: 'Cart/editCart',
@@ -46,6 +50,7 @@ import { CartItem } from '@/interfaces/cart.interface'
 })
 export default class Menubar extends Vue {
 
+  readonly fetchProducts!: any
   readonly fetchCart!: any
   readonly editCart!: any
   readonly removeItem!: any
@@ -60,6 +65,13 @@ export default class Menubar extends Vue {
 
   onActiveCartbar(status: boolean): void {
     this.isActive = status
+  }
+
+  async onSearch(searchValue: string): Promise<void> {
+    if (this.$route.name === 'home'){
+      await this.fetchProducts(searchValue)
+    }
+    this.$router.replace({ name: 'home', query: { search: searchValue }})
   }
 
   async onSelectQuantity(payload: CartItem): Promise<void> {
