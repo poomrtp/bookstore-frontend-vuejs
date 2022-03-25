@@ -67,10 +67,6 @@ export default class Home extends Vue {
     await this.fetchCart()
   }
 
-  fetchData(): void {
-    console.log('this.$route.query.search')
-  }
-
   onClickDetail (name: string): void {
     const params = {
       name

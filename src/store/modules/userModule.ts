@@ -18,7 +18,6 @@ const actions = {
   },
   async login(store: ActionContext<typeof state, any>, params: LoginInterface): Promise<void> {
     const token = await UserService.login(params)
-    console.log('token', token)
     auth.setAuthUser(token)
     if (token) {
       store.commit('SET_IS_AUTH', true)

@@ -62,11 +62,9 @@ export default class Home extends Vue {
   ]
   async mounted(): Promise<void> {
     const decodeUser = authUtil.getAuthDecode()
-    console.log('decodeUser', decodeUser)
     if (decodeUser) {
       try {
         await this.getUser()
-        console.log('user', this.user)
       } catch (error) {
         console.error('[created] decodeUser', error)
 

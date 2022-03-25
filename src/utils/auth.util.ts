@@ -5,7 +5,6 @@ const storageKey = "bookstoreSecret"
 
 export const getAuth = (): any => {
   const auth = Cookies.get(storageKey)
-  console.log('auth', auth)
   return auth
 }
 // 2 

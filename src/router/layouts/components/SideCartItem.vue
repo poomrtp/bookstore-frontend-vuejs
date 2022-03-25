@@ -70,12 +70,10 @@ export default class CartItem extends Vue {
       ...this.cart,
       quantity: +this.cart.quantity
     }
-    // console.log('cart-cartitem', data)
     this.$emit('onSelectQuantity', data)
   }
 
   onRemoveItem(): void {
-    // console.log('cart-cartitem', data)
     this.$emit('onRemoveItem', this.cart)
   }
 }

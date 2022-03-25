@@ -16,7 +16,8 @@
         </price-detail>
         <div class="flex justify-between">
           <button
-            class="w-full my-1 mr-1 py-2 text-blue-500 border border-blue-500 rounded">
+            class="w-full my-1 mr-1 py-2 text-blue-500 border border-blue-500 rounded"
+            @click="buyNow()">
             BUY NOW
           </button>
           <button
@@ -137,12 +138,9 @@ export default class Detail extends Vue {
   private quantitySelected = 1 
 
   async created(): Promise<void> {
-    console.log(this.name)
     await this.fetchProductsByName(this.name)
     await this.fetchCart()
     this.typeSelected = this.product?.types[0]
-    console.log('this.typeSelected', this.typeSelected)
-    console.log('this.product', this.product)
   }
 
   onActivePreviewImageModal(): void {
@@ -158,11 +156,15 @@ export default class Detail extends Vue {
   }
 
   findProductByName(): number {
-    console.log('this.typeSelected.name', this.typeSelected.name)
     const result = this.cart.cartItems.findIndex(item => {
       return item.name + '-' + item.type.name === this.product.name + '-' + this.typeSelected.name
     })
     return result
+  }
+  
+  async buyNow(): Promise<void> {
+    await this.addProductToCart()
+    this.$router.push({ name: 'cart-detail' })
   }
 
   async addProductToCart(): Promise<void> {

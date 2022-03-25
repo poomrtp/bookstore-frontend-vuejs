@@ -72,7 +72,6 @@ import { BookInterface, Type } from '@/interfaces/book.interface'
   computed: {
     isBook(): boolean {
       this.quantitySelected = 1
-      console.log('isBook', this.typeSelected)
       return this.typeSelected?.name || true
   }
   }
@@ -90,7 +89,6 @@ export default class PriceDetail extends Vue {
   }
 
   onSelectProductType(productType: Type): void {
-    console.log(productType)
     this.$emit('onSelectProductType', productType)
   }
 

@@ -71,7 +71,6 @@ export default class ProductList extends Vue {
   }
 
   onClickDetail (name: string): void {
-    console.log('name', name)
     this.$emit('clickDetail', name)
   }
 

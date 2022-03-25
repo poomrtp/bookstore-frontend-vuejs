@@ -78,14 +78,12 @@ export default class Menubar extends Vue {
   }
 
   async onSelectQuantity(payload: CartItem): Promise<void> {
-    console.log('onSelectQuantity', payload)
     await this.editCart(payload)
     await this.fetchCart()
     await this.fetchFinalCart()
   }
 
   async onRemoveItem(payload: CartItem): Promise<void> {
-    console.log('onRemoveItem', payload)
     await this.removeItem(payload)
     await this.fetchCart()
     await this.fetchFinalCart()

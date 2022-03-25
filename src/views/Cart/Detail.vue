@@ -90,7 +90,6 @@ export default class CartDetail extends Vue {
   async created(): Promise<void> {
     await this.fetchCart()
     await this.fetchFinalCart()
-    console.log(this.ebookItems,this.bookItems)
   }
 
   subtotalIndex(index: number): number {
@@ -103,20 +102,17 @@ export default class CartDetail extends Vue {
       orders: [...this.ebookItems, ...this.bookItems],
       ...this.finalCart
     }
-    console.log('onSubmitOrder', payload)
     await this.createOrder(payload)
     this.$router.push({path: '/checkout'})
   }
 
   async onSelectQuantity(payload: CartItem): Promise<void> {
-    console.log('onSelectQuantity', payload)
     await this.editCart(payload)
     await this.fetchCart()
     await this.fetchFinalCart()
   }
 
   async onRemoveItem(payload: CartItem): Promise<void> {
-    console.log('onRemoveItem', payload)
     await this.removeItem(payload)
     await this.fetchCart()
     await this.fetchFinalCart()
