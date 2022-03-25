@@ -1,6 +1,7 @@
 import axios from 'axios'
 import authUtil from '@/utils/auth.util'
-const apiURL = 'http://localhost:3000/api/orders/'
+// const apiURL = 'http://localhost:3000/api/orders/'
+const apiURL = `${process.env.VUE_APP_API_BASE_URL}/api/orders/`
 
 class OrderProvider {
 

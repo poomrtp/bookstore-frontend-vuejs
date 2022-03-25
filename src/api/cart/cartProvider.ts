@@ -1,8 +1,10 @@
 import axios from 'axios'
 import authUtil from '@/utils/auth.util'
+// import dotenv from 'dotenv'
 import { CartInterface, CartItem, FinalCartInterface } from '@/interfaces/cart.interface'
 import { BookInterface } from "@/interfaces/book.interface"
-const apiURL = 'http://localhost:3000/api/carts/'
+// const apiURL = 'http://localhost:3000/api/carts/'
+const apiURL = `${process.env.VUE_APP_API_BASE_URL}/api/carts/`
 
 class CartProvider {
 

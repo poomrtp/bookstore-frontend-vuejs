@@ -1,7 +1,8 @@
 import axios from 'axios'
 import authUtil from '@/utils/auth.util'
 import { AccountInterface, MessageResponse, RegisterInterface, LoginInterface } from "@/interfaces/account.interface"
-const apiURL = 'http://localhost:3000/api/user/'
+// const apiURL = 'http://localhost:3000/api/user/'
+const apiURL = `${process.env.VUE_APP_API_BASE_URL}/api/user/`
 
 class UserProvider {
 
