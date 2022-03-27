@@ -8,7 +8,7 @@ const apiURL = `${process.env.VUE_APP_API_BASE_URL}/api/carts/`
 
 class CartProvider {
 
-  fetchCart(): Promise<CartInterface> {
+  async fetchCart(): Promise<CartInterface> {
     return axios.get(apiURL, {
       headers: {
         ...authUtil.getAuthToken()
@@ -18,7 +18,7 @@ class CartProvider {
     })
   }
 
-  fetchFinalCart(): Promise<FinalCartInterface> {
+  async fetchFinalCart(): Promise<FinalCartInterface> {
     return axios.get(apiURL+ 'getfull', {
       headers: {
         ...authUtil.getAuthToken()
@@ -28,7 +28,7 @@ class CartProvider {
     })
   }
 
-  addToCart(payload: BookInterface): Promise<CartInterface> {
+  async addToCart(payload: BookInterface): Promise<CartInterface> {
     return axios.post(apiURL + 'add-to-cart', payload, {
       headers: {
         ...authUtil.getAuthToken()
@@ -38,7 +38,7 @@ class CartProvider {
     })
   }
 
-  editCart(payload: CartItem): Promise<CartInterface> {
+  async editCart(payload: CartItem): Promise<CartInterface> {
     return axios.patch(apiURL + 'edit', payload, {
       headers: {
         ...authUtil.getAuthToken()
@@ -48,7 +48,7 @@ class CartProvider {
     })
   }
 
-  removeItem(payload: CartItem): Promise<CartInterface> {
+  async removeItem(payload: CartItem): Promise<CartInterface> {
     return axios.patch(apiURL + 'remove', payload, {
       headers: {
         ...authUtil.getAuthToken()

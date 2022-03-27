@@ -1,11 +1,12 @@
 import axios from 'axios'
 import authUtil from '@/utils/auth.util'
+import { OrderInterface, OrdersCreateInterface } from '@/interfaces/order.interface'
 // const apiURL = 'http://localhost:3000/api/orders/'
 const apiURL = `${process.env.VUE_APP_API_BASE_URL}/api/orders/`
 
 class OrderProvider {
 
-  createOrder(payload: any): any {
+  async createOrder(payload: OrdersCreateInterface): Promise<OrderInterface> {
     return axios.post(apiURL + 'create', payload, {
       headers: {
         ...authUtil.getAuthToken()
@@ -15,7 +16,7 @@ class OrderProvider {
     })
   }
 
-  checkoutOrder(payload: any): any {
+  async checkoutOrder(payload: OrderInterface): Promise<OrderInterface> {
     return axios.patch(apiURL + 'checkout', payload, {
       headers: {
         ...authUtil.getAuthToken()
@@ -25,8 +26,8 @@ class OrderProvider {
     })
   }
 
-  getOrderByUser(): any {
-    return axios.get(apiURL + '/get-order', {
+  async getOrderByUser(): Promise<OrderInterface> {
+    return axios.get(apiURL + 'get-order', {
       headers: {
         ...authUtil.getAuthToken()
       }

@@ -18,6 +18,12 @@ export interface AtedBy {
   _id:  string;
 }
 
+export interface OrdersCreateInterface {
+  orders:     Order[];
+  totalPrice: number;
+  totalItem:  number;
+}
+
 export interface Order {
   seller:      string;
   items:       Item[];

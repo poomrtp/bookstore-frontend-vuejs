@@ -9,7 +9,7 @@
           <div class="text-2xl font-semibold mb-6">
             LOGIN
           </div>
-          <label class="text-md font-medium">Username or Email</label>
+          <label class="text-md font-medium">Username</label>
           <div
             class="flex w-full h-11 bg-white border border-gray-200 rounded-md mb-4 focus-within:border-blue-300">
             <div class="flex">
