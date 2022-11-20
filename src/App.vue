@@ -20,9 +20,7 @@ import Menubar from './router/layouts/Menubar.vue'
 import { AccountInterface } from '@/interfaces/account.interface'
 
 @Options({
-  components: {
-    
-  },
+  components: {},
   computed: {
     ...mapState('Cart', ['cart']),
     ...mapState('User', ['user'])
