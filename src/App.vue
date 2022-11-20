@@ -65,7 +65,6 @@ export default class Home extends Vue {
         await this.getUser()
       } catch (error) {
         console.error('[created] decodeUser', error)
-
       }
     }
   }
