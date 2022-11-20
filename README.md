@@ -1,4 +1,5 @@
 # bookstore-frontend-vue
+Demo: https://fluffy-capybara-a56bdb.netlify.app
 
 ## Project setup
 ```
